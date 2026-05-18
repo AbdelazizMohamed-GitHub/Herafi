@@ -7,8 +7,12 @@ class HerafiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      builder: (context, child) {
+        return Directionality(textDirection: TextDirection.rtl, child: child!);
+      },
       routerConfig: herafiRouter,
       debugShowCheckedModeBanner: false,
+
       title: 'حـرفـي',
     );
   }
