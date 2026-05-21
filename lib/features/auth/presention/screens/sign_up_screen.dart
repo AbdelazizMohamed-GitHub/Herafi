@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:herafi_app/app/router/routes.dart';
-import 'package:herafi_app/app/theme/app_colors.dart';
-import 'package:herafi_app/app/theme/app_style.dart';
+import 'package:herafi_app/app/router/hearfi_routes.dart';
+import 'package:herafi_app/app/theme/herafi_colors.dart';
+import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/features/auth/presention/widget/auth_appbar_widget.dart';
 import 'package:herafi_app/features/auth/presention/widget/custom_google_facebook_auth_widget.dart';
 import 'package:herafi_app/features/auth/presention/widget/custom_sign_up_body_widget.dart';

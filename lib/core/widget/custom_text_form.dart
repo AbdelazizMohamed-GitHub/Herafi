@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:herafi_app/app/theme/app_colors.dart';
+import 'package:herafi_app/app/theme/herafi_colors.dart';
 
 class CustomTextForm extends StatelessWidget {
   const CustomTextForm({

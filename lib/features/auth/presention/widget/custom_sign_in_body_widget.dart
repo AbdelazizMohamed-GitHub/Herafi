@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:herafi_app/app/theme/app_colors.dart';
-import 'package:herafi_app/app/theme/app_style.dart';
+import 'package:go_router/go_router.dart';
+import 'package:herafi_app/app/router/hearfi_routes.dart';
+import 'package:herafi_app/app/theme/herafi_colors.dart';
+import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
 
@@ -10,6 +12,8 @@ class CustomSignInBodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+
       children: [
         const Text('رقم الهاتف أو البريد', style: HerafiStyles.text20Black),
 
@@ -43,7 +47,9 @@ class CustomSignInBodyWidget extends StatelessWidget {
         const SizedBox(height: 20),
 
         CustomButton(
-          onPressed: () {},
+          onPressed: () {
+            context.go(HerafiRoutes.home);
+          },
           text: 'تسجيل الدخول',
           color: HerafiColors.goldColor,
           textStyle: HerafiStyles.text26boldDarkBlue,

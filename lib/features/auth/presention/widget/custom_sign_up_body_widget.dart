@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:herafi_app/app/theme/app_colors.dart';
-import 'package:herafi_app/app/theme/app_style.dart';
+import 'package:herafi_app/app/theme/herafi_colors.dart';
+import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
 
@@ -10,6 +10,8 @@ class CustomSignUpBodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+
       children: [
         const Text('الاسم ثلاثي', style: HerafiStyles.text20Black),
         const SizedBox(height: 8),
@@ -42,7 +44,7 @@ class CustomSignUpBodyWidget extends StatelessWidget {
           pIcon: Icons.lock,
           obscureText: true,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
 
         CustomTextForm(
           text: 'ادخل كلمة المرور مره اخري ',
