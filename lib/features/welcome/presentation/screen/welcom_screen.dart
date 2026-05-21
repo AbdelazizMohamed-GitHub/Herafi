@@ -9,14 +9,14 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: HerafiColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.darkBlueColor,
+        backgroundColor: HerafiColors.darkBlueColor,
         title: Text.rich(
           TextSpan(
             children: [
-              TextSpan(text: 'حِـ', style: AppStyle.text26boldWhite),
-              TextSpan(text: 'ـرفـي', style: AppStyle.text26boldGold),
+              TextSpan(text: 'حِـ', style: HerafiStyles.text26boldWhite),
+              TextSpan(text: 'ـرفـي', style: HerafiStyles.text26boldGold),
             ],
           ),
         ),
@@ -38,11 +38,11 @@ class WelcomeScreen extends StatelessWidget {
                           children: [
                             TextSpan(
                               text: 'مرحبا بك في ',
-                              style: AppStyle.text26boldDarkBlue,
+                              style: HerafiStyles.text26boldDarkBlue,
                             ),
                             TextSpan(
                               text: 'حِــرفـي',
-                              style: AppStyle.text26boldGold,
+                              style: HerafiStyles.text26boldGold,
                             ),
                           ],
                         ),
@@ -51,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
                       SizedBox(height: 10),
                       Text(
                         'أختر نوع حسابك للمتابعة',
-                        style: AppStyle.text20Black,
+                        style: HerafiStyles.text20Black,
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -69,24 +69,24 @@ class WelcomeScreen extends StatelessWidget {
                           ListTile(
                             title: Text(
                               "أنا عـمـيـل",
-                              style: AppStyle.text26boldDarkBlue,
+                              style: HerafiStyles.text26boldDarkBlue,
                             ),
                             trailing: Icon(
                               Icons.person_outlined,
                               size: 30,
-                              color: AppColors.goldColor,
+                              color: HerafiColors.goldColor,
                             ),
                           ),
                           Text(
                             'ابحث عن حرفيين موثقيين للمهام المنزلية',
-                            style: AppStyle.text20Black,
+                            style: HerafiStyles.text20Black,
                           ),
                           SizedBox(height: 12),
                           CustomButton(
                             onPressed: () {},
                             text: 'اخـتـر كـعـمـيل',
-                            color: AppColors.darkBlueColor,
-                            textStyle: AppStyle.text26boldWhite,
+                            color: HerafiColors.darkBlueColor,
+                            textStyle: HerafiStyles.text26boldWhite,
                           ),
                           SizedBox(height: 12),
                         ],
@@ -106,24 +106,24 @@ class WelcomeScreen extends StatelessWidget {
                           ListTile(
                             title: Text(
                               "أنا حـرفي",
-                              style: AppStyle.text26boldDarkBlue,
+                              style: HerafiStyles.text26boldDarkBlue,
                             ),
                             trailing: Icon(
                               Icons.handyman_outlined,
                               size: 30,
-                              color: AppColors.goldColor,
+                              color: HerafiColors.goldColor,
                             ),
                           ),
                           Text(
                             'ابحث عن حرفيين موثقيين للمهام المنزلية',
-                            style: AppStyle.text20Black,
+                            style: HerafiStyles.text20Black,
                           ),
                           SizedBox(height: 12),
                           CustomButton(
                             onPressed: () {},
                             text: 'اخـتـر كـحـرفي',
-                            color: AppColors.goldColor,
-                            textStyle: AppStyle.text26boldDarkBlue,
+                            color: HerafiColors.goldColor,
+                            textStyle: HerafiStyles.text26boldDarkBlue,
                           ),
                           SizedBox(height: 12),
                         ],
@@ -134,13 +134,12 @@ class WelcomeScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('هل لديك حساب ؟', style: AppStyle.text20Black),
+                      Text('هل لديك حساب ؟', style: HerafiStyles.text20Black),
                       TextButton(
                         onPressed: () {},
                         child: Text(
                           'تسجيل الدخول',
-                          style: AppStyle.text20Black.copyWith(
-                            color: AppColors.goldColor,
+                          style: HerafiStyles.text20Gold.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
