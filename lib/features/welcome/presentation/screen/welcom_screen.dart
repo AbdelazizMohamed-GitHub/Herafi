@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:herafi_app/app/router/routes.dart';
 import 'package:herafi_app/app/theme/app_colors.dart';
 import 'package:herafi_app/app/theme/app_style.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
@@ -120,7 +122,9 @@ class WelcomeScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 12),
                           CustomButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.go(HerafiRoutes.signUp);
+                            },
                             text: 'اخـتـر كـحـرفي',
                             color: HerafiColors.goldColor,
                             textStyle: HerafiStyles.text26boldDarkBlue,
@@ -136,7 +140,9 @@ class WelcomeScreen extends StatelessWidget {
                     children: [
                       Text('هل لديك حساب ؟', style: HerafiStyles.text20Black),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.go(HerafiRoutes.signIn);
+                        },
                         child: Text(
                           'تسجيل الدخول',
                           style: HerafiStyles.text20Gold.copyWith(

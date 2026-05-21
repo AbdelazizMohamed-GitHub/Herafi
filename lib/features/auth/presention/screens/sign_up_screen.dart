@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:herafi_app/app/router/routes.dart';
 import 'package:herafi_app/app/theme/app_colors.dart';
 import 'package:herafi_app/app/theme/app_style.dart';
 import 'package:herafi_app/core/constant/assets/app_image.dart';
@@ -91,6 +93,14 @@ class SignUpScreen extends StatelessWidget {
                     pIcon: Icons.lock,
                     obscureText: true,
                   ),
+                  const SizedBox(height: 8),
+
+                  CustomTextForm(
+                    text: 'ادخل كلمة المرور مره اخري ',
+                    kType: TextInputType.text,
+                    pIcon: Icons.lock,
+                    obscureText: true,
+                  ),
                   SizedBox(height: 12),
                   DropdownButtonFormField<String>(
                     decoration: InputDecoration(
@@ -173,7 +183,9 @@ class SignUpScreen extends StatelessWidget {
                     children: [
                       Text('لو عندك حساب؟ ', style: HerafiStyles.text20Black),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.go(HerafiRoutes.signIn);
+                        },
                         child: Text(
                           'سجل الدخول ',
                           style: HerafiStyles.text20Gold.copyWith(

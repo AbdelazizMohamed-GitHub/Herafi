@@ -5,7 +5,7 @@ import 'package:herafi_app/features/auth/presention/screens/sign_up_screen.dart'
 import 'package:herafi_app/features/welcome/presentation/screen/welcom_screen.dart';
 
 final herafiRouter = GoRouter(
-  initialLocation: HerafiRoutes.signUp,
+  initialLocation: HerafiRoutes.welcome,
   routes: [
     GoRoute(
       path: HerafiRoutes.welcome,
