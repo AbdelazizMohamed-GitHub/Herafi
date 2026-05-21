@@ -3,12 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:herafi_app/app/router/routes.dart';
 import 'package:herafi_app/app/theme/app_colors.dart';
 import 'package:herafi_app/app/theme/app_style.dart';
-import 'package:herafi_app/core/constant/assets/app_image.dart';
-import 'package:herafi_app/core/widget/custom_text_form.dart';
-import 'package:herafi_app/core/widget/cutom_button.dart';
 import 'package:herafi_app/features/auth/presention/widget/auth_appbar_widget.dart';
 import 'package:herafi_app/features/auth/presention/widget/custom_google_facebook_auth_widget.dart';
-import 'package:herafi_app/features/auth/presention/widget/custom_sign_in_widget.dart';
+import 'package:herafi_app/features/auth/presention/widget/custom_sign_in_body_widget.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -30,7 +27,7 @@ class SignInScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // CustomSignInWidget
-                  CustomSignInWidget(),
+                  CustomSignInBodyWidget(),
 
                   const SizedBox(height: 25),
 

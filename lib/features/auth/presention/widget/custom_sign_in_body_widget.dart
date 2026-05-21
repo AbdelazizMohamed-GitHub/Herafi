@@ -4,8 +4,8 @@ import 'package:herafi_app/app/theme/app_style.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
 
-class CustomSignInWidget extends StatelessWidget {
-  const CustomSignInWidget({super.key});
+class CustomSignInBodyWidget extends StatelessWidget {
+  const CustomSignInBodyWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
