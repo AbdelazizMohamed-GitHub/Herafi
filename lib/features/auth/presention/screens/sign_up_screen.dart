@@ -5,8 +5,8 @@ import 'package:herafi_app/core/constant/assets/app_image.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
 
-class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +25,19 @@ class SignInScreen extends StatelessWidget {
 
             // يظهر بعد الـ scroll
             flexibleSpace: FlexibleSpaceBar(
+              expandedTitleScale: 1,
               centerTitle: true,
               title: Text.rich(
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'سجل دخولك في',
+                      text: 'انشئ حسابك في ',
                       style: HerafiStyles.text26boldWhite,
                     ),
-                    TextSpan(text: ' حرفي', style: HerafiStyles.text26boldGold),
+                    TextSpan(
+                      text: ' حِرفي',
+                      style: HerafiStyles.text26boldGold,
+                    ),
                   ],
                 ),
               ),
@@ -53,12 +57,22 @@ class SignInScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Text('الاسم ثلاثي', style: HerafiStyles.text20Black),
+                  const SizedBox(height: 8),
+
+                  CustomTextForm(
+                    pIcon: Icons.person,
+                    text: 'ادخل اسمك ',
+                    kType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(height: 12),
+
                   const Text(
                     'رقم الهاتف أو البريد',
                     style: HerafiStyles.text20Black,
                   ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
 
                   CustomTextForm(
                     pIcon: Icons.email,
@@ -66,33 +80,44 @@ class SignInScreen extends StatelessWidget {
                     kType: TextInputType.emailAddress,
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 12),
+                  Text('كلمة المرور', style: HerafiStyles.text20Black),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text('كلمة المرور', style: HerafiStyles.text20Black),
-                      Text(
-                        'نسيت كلمة المرور؟',
-                        style: TextStyle(
-                          color: Color(0xffF5A623),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
 
                   CustomTextForm(
                     text: 'ادخل كلمة المرور',
                     kType: TextInputType.text,
+                    pIcon: Icons.lock,
+                    obscureText: true,
                   ),
+                  SizedBox(height: 12),
+                  DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+
+                      hint: Text('اختر حرفتك'),
+
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                    items: [
+                      DropdownMenuItem(
+                        value: 'سيراميك',
+                        child: const Text('سيراميك'),
+                      ),
+                    ],
+                    onChanged: (value) {},
+                  ),
+
                   const SizedBox(height: 20),
 
                   CustomButton(
                     onPressed: () {},
-                    text: 'تسجيل الدخول',
+                    text: 'ءانشاء حساب',
                     color: HerafiColors.goldColor,
                     textStyle: HerafiStyles.text26boldDarkBlue,
                   ),
@@ -142,14 +167,15 @@ class SignInScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('مش عندك حساب؟ ', style: HerafiStyles.text20Black),
+                      Text('لو عندك حساب؟ ', style: HerafiStyles.text20Black),
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          ' سجل الآن',
+                          'سجل الدخول ',
                           style: HerafiStyles.text20Gold.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -157,6 +183,7 @@ class SignInScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 16),
                 ],
               ),
             ),
