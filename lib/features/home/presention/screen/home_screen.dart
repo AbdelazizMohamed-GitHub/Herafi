@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/constant/assets/herafi_image.dart';
+import 'package:herafi_app/core/constant/herfa_list.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -39,23 +41,47 @@ class HomeScreen extends StatelessWidget {
             ),
 
             SizedBox(
-              height: 40,
+              height: 80,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 10,
+                itemCount: herfaList.length,
 
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.only(right: 20),
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    alignment: Alignment.center,
+                  return Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 8,
+                          ),
+                          alignment: Alignment.center,
 
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(width: 0.3, color: Colors.black),
-                    ),
-                    child: Text('hello'),
+                          decoration: BoxDecoration(
+                            color: herfaList[index].herfaColor,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              width: 0.5,
+                              color: Color.lerp(
+                                herfaList[index].herfaColor,
+                                Colors.black,
+                                0.3,
+                              )!,
+                            ),
+                          ),
+                          child: Expanded(
+                            child: SvgPicture.asset(
+                              fit: BoxFit.cover,
+                              herfaList[index].herfaImagePath,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(herfaList[index].herfaName),
+                    ],
                   );
                 },
               ),

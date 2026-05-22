@@ -26,41 +26,41 @@ List<HerfaModel> herfaList = [
   HerfaModel(
     herfaName: 'التكييف',
     herfaImagePath: HerfaImage.takyef,
-    herfaColor: Color(0xff585E6D),
+    herfaColor: Color(0xffE8E9E9),
   ),
   HerfaModel(
     herfaName: 'الزجاج',
     herfaImagePath: HerfaImage.zgag,
-    herfaColor: Color(0xff003CA7),
+    herfaColor: Color(0xffE1E7F2),
   ),
   HerfaModel(
     herfaName: 'المحارة',
     herfaImagePath: HerfaImage.mehara,
-    herfaColor: Color(0xff585E6D),
+    herfaColor: Color(0xffE7E8E8),
   ),
   HerfaModel(
     herfaName: 'الألوميتال',
     herfaImagePath: HerfaImage.almontal,
-    herfaColor: Color(0xff003CA7),
+    herfaColor: Color(0xffE2E8F3),
   ),
   HerfaModel(
     herfaName: 'السيراميك',
     herfaImagePath: HerfaImage.saramek,
-    herfaColor: Color(0xffEA580C),
+    herfaColor: Color(0xffF9EBE4),
   ),
   HerfaModel(
     herfaName: 'جبس بورد',
     herfaImagePath: HerfaImage.gebsboard,
-    herfaColor: Color(0xff7E2900),
+    herfaColor: Color(0xffF0E8E3),
   ),
   HerfaModel(
     herfaName: 'البورسلين',
     herfaImagePath: HerfaImage.borcolen,
-    herfaColor: Color(0xff16A34A),
+    herfaColor: Color(0xffE4F2E9),
   ),
   HerfaModel(
     herfaName: 'صيانة الأجهزة',
     herfaImagePath: HerfaImage.seyantelaghaza,
-    herfaColor: Color(0xff5E6473),
+    herfaColor: Color(0xffE9E9EB),
   ),
 ];
