@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
-import 'package:herafi_app/core/constant/assets/app_image.dart';
+import 'package:herafi_app/core/constant/assets/herafi_image.dart';
 
 class AuthAppBarWidget extends StatelessWidget {
   const AuthAppBarWidget({super.key, required this.appbarTitle});

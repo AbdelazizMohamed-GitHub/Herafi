@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
-import 'package:herafi_app/core/constant/assets/app_image.dart';
+import 'package:herafi_app/core/constant/assets/herafi_image.dart';
 
 class CustomGoogleFacebookAuthWidget extends StatelessWidget {
   const CustomGoogleFacebookAuthWidget({Key? key}) : super(key: key);
