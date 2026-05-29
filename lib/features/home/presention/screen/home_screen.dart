@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/constant/assets/herafi_image.dart';
-import 'package:herafi_app/core/constant/herfa_list.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 import 'package:herafi_app/features/home/presention/widget/custom_category_list.dart';
 import 'package:herafi_app/features/home/presention/widget/custom_herafi_list.dart';
@@ -17,8 +17,13 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: HerafiColors.background,
       appBar: AppBar(
         actions: [
-          CircleAvatar(backgroundImage: AssetImage(HerafiImage.profile)),
-          SizedBox(width: 12),
+          GestureDetector(
+            onTap: () => context.push(HerafiRoutes.profile),
+            child: const CircleAvatar(
+              backgroundImage: AssetImage(HerafiImage.profile),
+            ),
+          ),
+          const SizedBox(width: 12),
         ],
         title: Text("الرئيسية", style: HerafiStyles.text26boldWhite),
         centerTitle: true,

@@ -5,4 +5,5 @@ class HerafiImage {
   static const String google = 'assets/images/google.png';
   static const String profile = 'assets/images/profile.png';
   static const String user = 'assets/images/user.jpg';
+  static const String whatsapp = 'assets/images/whatsapp.svg';
 }

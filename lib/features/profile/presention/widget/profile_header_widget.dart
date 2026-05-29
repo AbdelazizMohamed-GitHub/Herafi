@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:herafi_app/app/model/herafi_model.dart';
+import 'package:herafi_app/app/theme/herafi_colors.dart';
+import 'package:herafi_app/app/theme/herafi_style.dart';
+
+class ProfileHeaderWidget extends StatelessWidget {
+  const ProfileHeaderWidget({super.key, required this.profile});
+
+  final HerafiModel profile;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: HerafiColors.darkBlueColor,
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(16),
+          bottomLeft: Radius.circular(16),
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 80,
+            backgroundColor: Colors.white,
+            child: ClipOval(
+              child: Image.asset(
+                profile.imageUrl,
+                width: 180,
+                height: 150,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(profile.name, style: HerafiStyles.text26boldWhite),
+          const SizedBox(height: 6),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 8,
+
+            children: profile.jobTitle.asMap().entries.map((entry) {
+              int index = entry.key;
+              String title = entry.value;
+
+              return Text(
+                index < profile.jobTitle.length - 1 ? '$title &' : title,
+                style: HerafiStyles.text20Gold,
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 12),
+        ],
+      ),
+    );
+  }
+}
