@@ -4,4 +4,5 @@ class HerafiImage {
   static const String facebook = 'assets/images/facebook.png';
   static const String google = 'assets/images/google.png';
   static const String profile = 'assets/images/profile.png';
+  static const String user = 'assets/images/user.jpg';
 }

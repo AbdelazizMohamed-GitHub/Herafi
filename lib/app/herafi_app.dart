@@ -12,7 +12,6 @@ class HerafiApp extends StatelessWidget {
       },
       routerConfig: herafiRouter,
       debugShowCheckedModeBanner: false,
-
       title: 'حـرفـي',
     );
   }
