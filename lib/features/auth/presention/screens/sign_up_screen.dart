@@ -44,7 +44,7 @@ class SignUpScreen extends StatelessWidget {
                       Text('لو عندك حساب؟ ', style: HerafiStyles.text20Black),
                       TextButton(
                         onPressed: () {
-                          context.go(HerafiRoutes.signIn);
+                          context.push(HerafiRoutes.signIn);
                         },
                         child: Text(
                           'سجل الدخول ',

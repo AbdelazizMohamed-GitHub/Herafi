@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
@@ -72,7 +74,9 @@ class CustomSignUpBodyWidget extends StatelessWidget {
         const SizedBox(height: 20),
 
         CustomButton(
-          onPressed: () {},
+          onPressed: () {
+            context.push(HerafiRoutes.home);
+          },
           text: 'ءانشاء حساب',
           color: HerafiColors.goldColor,
           textStyle: HerafiStyles.text26boldDarkBlue,

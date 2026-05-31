@@ -141,7 +141,7 @@ class WelcomeScreen extends StatelessWidget {
                       Text('هل لديك حساب ؟', style: HerafiStyles.text20Black),
                       TextButton(
                         onPressed: () {
-                          context.go(HerafiRoutes.signIn);
+                          context.push(HerafiRoutes.signIn);
                         },
                         child: Text(
                           'تسجيل الدخول',

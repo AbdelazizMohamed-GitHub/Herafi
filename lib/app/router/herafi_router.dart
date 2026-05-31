@@ -8,7 +8,7 @@ import 'package:herafi_app/features/home/presention/screen/home_screen.dart';
 import 'package:herafi_app/features/welcome/presentation/screen/welcom_screen.dart';
 
 final herafiRouter = GoRouter(
-  initialLocation: HerafiRoutes.profile,
+  initialLocation: HerafiRoutes.editProfile,
   routes: [
     GoRoute(
       path: HerafiRoutes.welcome,

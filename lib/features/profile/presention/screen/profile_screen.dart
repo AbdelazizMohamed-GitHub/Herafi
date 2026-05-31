@@ -64,7 +64,9 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         CustomButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.push(HerafiRoutes.welcome);
+                          },
                           text: "تسجيل الخروج",
                           color: HerafiColors.goldColor,
                           textStyle: HerafiStyles.text20Black,
