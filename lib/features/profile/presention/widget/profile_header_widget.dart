@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
+import 'package:herafi_app/core/constant/assets/herafi_image.dart';
+import 'package:herafi_app/core/widget/cutom_button.dart';
+import 'package:herafi_app/features/profile/presention/widget/custom_profile_button.dart';
 
 class ProfileHeaderWidget extends StatelessWidget {
   const ProfileHeaderWidget({super.key, required this.profile});
@@ -34,9 +38,9 @@ class ProfileHeaderWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           Text(profile.name, style: HerafiStyles.text26boldWhite),
-          const SizedBox(height: 6),
+          const SizedBox(height: 4),
           Wrap(
             alignment: WrapAlignment.center,
             spacing: 8,
@@ -52,6 +56,25 @@ class ProfileHeaderWidget extends StatelessWidget {
             }).toList(),
           ),
           const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomProfileButton(
+                buttonText: 'اتصال',
+                buttonTextStyle: HerafiStyles.text20Black,
+                buttonColor: HerafiColors.background,
+                buttonIcon: Icon(Icons.phone),
+              ),
+              SizedBox(width: 12),
+              CustomProfileButton(
+                buttonText: 'واتس',
+                buttonTextStyle: HerafiStyles.text20White,
+                buttonColor: HerafiColors.goldColor,
+                buttonIcon: SvgPicture.asset(HerafiImage.whatsapp),
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
         ],
       ),
     );

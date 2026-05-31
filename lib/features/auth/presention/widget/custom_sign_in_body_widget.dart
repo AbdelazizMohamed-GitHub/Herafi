@@ -48,7 +48,7 @@ class CustomSignInBodyWidget extends StatelessWidget {
 
         CustomButton(
           onPressed: () {
-            context.go(HerafiRoutes.home);
+            context.push(HerafiRoutes.home);
           },
           text: 'تسجيل الدخول',
           color: HerafiColors.goldColor,

@@ -7,14 +7,14 @@ import 'package:herafi_app/core/constant/assets/herafi_image.dart';
 class ProfileDetailTile extends StatelessWidget {
   const ProfileDetailTile({
     super.key,
-    required this.icon,
+    this.icon,
 
     required this.label,
     required this.value,
     required this.ontap,
   });
 
-  final IconData icon;
+  final IconData? icon;
   final String label;
   final String value;
   final void Function()? ontap;
@@ -26,12 +26,8 @@ class ProfileDetailTile extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-        trailing: CircleAvatar(
-          backgroundColor: HerafiColors.background,
-          radius: 30,
-          child: IconButton(onPressed: ontap, icon: Icon(icon, size: 30)),
-        ),
-        contentPadding: const EdgeInsets.all(12),
+        leading: IconButton(onPressed: ontap, icon: Icon(icon, size: 30)),
+        contentPadding: const EdgeInsets.all(8),
         title: Text(label, style: HerafiStyles.text16GoldBold),
         subtitle: Text(value, style: HerafiStyles.text20Black),
       ),

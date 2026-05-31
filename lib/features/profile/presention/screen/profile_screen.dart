@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:herafi_app/app/model/user_profile_model.dart';
+import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/constant/assets/herafi_image.dart';
@@ -13,63 +15,69 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profile = currentUserProfile;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: HerafiColors.darkBlueColor,
-        title: Text('الملف الشخصي', style: HerafiStyles.text26boldWhite),
-      ),
-      backgroundColor: const Color(0xffF4F4F4),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                ProfileHeaderWidget(profile: profile),
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: HerafiColors.darkBlueColor,
+          title: Text('الملف الشخصي', style: HerafiStyles.text26boldWhite),
+        ),
+        backgroundColor: const Color(0xffF4F4F4),
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  ProfileHeaderWidget(profile: profile),
 
-                const SizedBox(height: 28),
+                  const SizedBox(height: 28),
 
-                ProfileDetailTile(
-                  icon: Icons.phone,
-                  label: 'رقم الهاتف',
-                  value: '01012345678',
-                  ontap: () {},
-                ),
-
-                const SizedBox(height: 16),
-
-                ProfileDetailTile(
-                  icon: Icons.location_on,
-                  label: 'الموقع',
-                  value: 'الشمون - بنها',
-                  ontap: () {},
-                ),
-
-                const SizedBox(height: 32),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Column(
-                    children: [
-                      CustomButton(
-                        onPressed: () {},
-                        text: "تعديل الملف الشخصي",
-                        color: HerafiColors.darkBlueColor,
-                        textStyle: HerafiStyles.text20White,
-                      ),
-                      SizedBox(height: 20),
-                      CustomButton(
-                        onPressed: () {},
-                        text: "تسجيل الخروج",
-                        color: HerafiColors.goldColor,
-                        textStyle: HerafiStyles.text20Black,
-                      ),
-                    ],
+                  ProfileDetailTile(
+                    icon: Icons.phone,
+                    label: 'رقم الهاتف',
+                    value: '01012345678',
+                    ontap: () {},
                   ),
-                ),
-              ],
+
+                  const SizedBox(height: 16),
+
+                  ProfileDetailTile(
+                    icon: Icons.location_on,
+                    label: 'الموقع',
+                    value: 'الشمون - بنها',
+                    ontap: () {},
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Column(
+                      children: [
+                        CustomButton(
+                          onPressed: () {
+                            context.push(HerafiRoutes.editProfile);
+                          },
+                          text: "تعديل الملف الشخصي",
+                          color: HerafiColors.darkBlueColor,
+                          textStyle: HerafiStyles.text20White,
+                        ),
+                        SizedBox(height: 20),
+                        CustomButton(
+                          onPressed: () {},
+                          text: "تسجيل الخروج",
+                          color: HerafiColors.goldColor,
+                          textStyle: HerafiStyles.text20Black,
+                        ),
+                        SizedBox(height: 12),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
