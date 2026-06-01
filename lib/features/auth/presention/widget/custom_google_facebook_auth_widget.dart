@@ -3,7 +3,7 @@ import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/constant/assets/herafi_image.dart';
 
 class CustomGoogleFacebookAuthWidget extends StatelessWidget {
-  const CustomGoogleFacebookAuthWidget({Key? key}) : super(key: key);
+  const CustomGoogleFacebookAuthWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

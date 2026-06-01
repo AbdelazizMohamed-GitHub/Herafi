@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:herafi_app/app/model/Herfa_model.dart';
+import 'package:herafi_app/app/model/herfa_model.dart';
 import 'package:herafi_app/core/constant/assets/herfa_image.dart';
 
 List<HerfaModel> herfaList = [
