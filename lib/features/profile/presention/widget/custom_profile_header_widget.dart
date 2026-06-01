@@ -4,11 +4,10 @@ import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/constant/assets/herafi_image.dart';
-import 'package:herafi_app/core/widget/cutom_button.dart';
 import 'package:herafi_app/features/profile/presention/widget/custom_profile_button.dart';
 
-class ProfileHeaderWidget extends StatelessWidget {
-  const ProfileHeaderWidget({super.key, required this.profile});
+class CustomProfileHeaderWidget extends StatelessWidget {
+  const CustomProfileHeaderWidget({super.key, required this.profile});
 
   final HerafiModel profile;
 

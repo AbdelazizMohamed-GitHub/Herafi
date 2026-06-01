@@ -4,10 +4,9 @@ import 'package:herafi_app/app/model/user_profile_model.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
-import 'package:herafi_app/core/constant/assets/herafi_image.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
-import 'package:herafi_app/features/profile/presention/widget/profile_detail_tile.dart';
-import 'package:herafi_app/features/profile/presention/widget/profile_header_widget.dart';
+import 'package:herafi_app/features/profile/presention/widget/custom_profile_detail_tile.dart';
+import 'package:herafi_app/features/profile/presention/widget/custom_profile_header_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -28,11 +27,11 @@ class ProfileScreen extends StatelessWidget {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  ProfileHeaderWidget(profile: profile),
+                  CustomProfileHeaderWidget(profile: profile),
 
                   const SizedBox(height: 28),
 
-                  ProfileDetailTile(
+                  CustomProfileDetailTileWidget(
                     icon: Icons.phone,
                     label: 'رقم الهاتف',
                     value: '01012345678',
@@ -41,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
 
                   const SizedBox(height: 16),
 
-                  ProfileDetailTile(
+                  CustomProfileDetailTileWidget(
                     icon: Icons.location_on,
                     label: 'الموقع',
                     value: 'الشمون - بنها',

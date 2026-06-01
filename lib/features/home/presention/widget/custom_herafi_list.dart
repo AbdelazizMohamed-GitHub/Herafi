@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:herafi_app/app/theme/herafi_colors.dart';
-import 'package:herafi_app/app/theme/herafi_style.dart';
-import 'package:herafi_app/core/constant/assets/herafi_image.dart';
 import 'package:herafi_app/features/home/presention/widget/custom_herafi_item_widget.dart';
 
 class CustomHerafiList extends StatelessWidget {
-  const CustomHerafiList({Key? key}) : super(key: key);
+  const CustomHerafiList({super.key});
 
   @override
   Widget build(BuildContext context) {

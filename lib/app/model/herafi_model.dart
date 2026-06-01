@@ -23,7 +23,7 @@ class HerafiModel {
     List? jobTitle,
     String? location,
     String? phone,
-    String? imagePath,
+    String? imageUrl,
     DateTime? createdAt,
   }) {
     return HerafiModel(
@@ -32,7 +32,7 @@ class HerafiModel {
       jobTitle: jobTitle ?? this.jobTitle,
       location: location ?? this.location,
       phone: phone ?? this.phone,
-      imageUrl: imagePath ?? this.imageUrl,
+      imageUrl: imageUrl ?? this.imageUrl,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -56,7 +56,7 @@ class HerafiModel {
       jobTitle: map['jobTitle'] ?? '',
       location: map['location'] ?? '',
       phone: map['phone'] ?? '',
-      imageUrl: map['imagePath'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
       createdAt: map['createdAt'] ?? '',
     );
   }
