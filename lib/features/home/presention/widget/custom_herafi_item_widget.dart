@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/constant/assets/herafi_image.dart';
+import 'package:herafi_app/core/widget/custom_herafi_jobTitle_widget.dart';
 
 class CustomHerafiItemWidget extends StatelessWidget {
-  const CustomHerafiItemWidget({super.key});
+  const CustomHerafiItemWidget({super.key, required this.herafi});
+  final HerafiModel herafi;
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +37,19 @@ class CustomHerafiItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "عبدالعزيز محمد عبدالعزيز",
+                      herafi.name,
                       style: HerafiStyles.text20Black,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    Text("مطور تطبيقات", style: HerafiStyles.text16GoldBold),
+                    CustomHerafiJobtitleWidget(jobTitle: herafi.jobTitle),
                     Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
-                            Text('الشموت - بنها'),
+                            Text(herafi.location),
                             Icon(Icons.location_on),
                           ],
                         ),

@@ -4,6 +4,7 @@ import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/constant/assets/herafi_image.dart';
+import 'package:herafi_app/core/widget/custom_herafi_jobTitle_widget.dart';
 import 'package:herafi_app/features/profile/presention/widget/custom_profile_button.dart';
 
 class CustomProfileHeaderWidget extends StatelessWidget {
@@ -40,20 +41,7 @@ class CustomProfileHeaderWidget extends StatelessWidget {
           const SizedBox(height: 12),
           Text(profile.name, style: HerafiStyles.text26boldWhite),
           const SizedBox(height: 4),
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 8,
-
-            children: profile.jobTitle.asMap().entries.map((entry) {
-              int index = entry.key;
-              String title = entry.value;
-
-              return Text(
-                index < profile.jobTitle.length - 1 ? '$title &' : title,
-                style: HerafiStyles.text20Gold,
-              );
-            }).toList(),
-          ),
+          CustomHerafiJobtitleWidget(jobTitle: profile.jobTitle),
           const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
