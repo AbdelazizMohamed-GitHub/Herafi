@@ -12,7 +12,7 @@ class CustomCategoryList extends StatefulWidget {
 }
 
 class _CustomCategoryListState extends State<CustomCategoryList> {
-  int selectedIndex = 0;
+  int? selectedIndex;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

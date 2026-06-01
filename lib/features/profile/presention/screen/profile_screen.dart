@@ -18,10 +18,14 @@ class ProfileScreen extends StatelessWidget {
       top: false,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: HerafiColors.darkBlueColor,
-          title: Text('الملف الشخصي', style: HerafiStyles.text26boldWhite),
+          leading: IconButton(
+            onPressed: () {
+              context.pop();
+            },
+            icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 25),
+          ),
+          title: Text('الملف الشخصي'),
         ),
-        backgroundColor: const Color(0xffF4F4F4),
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(

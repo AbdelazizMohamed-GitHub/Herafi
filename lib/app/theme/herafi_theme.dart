@@ -7,6 +7,7 @@ class HerafiTheme {
     primaryColor: HerafiColors.darkBlueColor,
     scaffoldBackgroundColor: HerafiColors.background,
     appBarTheme: const AppBarTheme(
+      iconTheme: IconThemeData(color: Colors.white),
       backgroundColor: HerafiColors.darkBlueColor,
       centerTitle: true,
       titleTextStyle: HerafiStyles.text26boldWhite,

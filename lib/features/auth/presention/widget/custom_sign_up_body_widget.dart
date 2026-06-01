@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
+import 'package:herafi_app/core/widget/custom_drop_down_form_field_widget.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
 
@@ -55,21 +56,7 @@ class CustomSignUpBodyWidget extends StatelessWidget {
           obscureText: true,
         ),
         SizedBox(height: 12),
-        DropdownButtonFormField<String>(
-          decoration: InputDecoration(
-            fillColor: Colors.white,
-            filled: true,
-
-            hint: Text('اختر حرفتك'),
-
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-          borderRadius: BorderRadius.circular(12),
-          items: [
-            DropdownMenuItem(value: 'سيراميك', child: const Text('سيراميك')),
-          ],
-          onChanged: (value) {},
-        ),
+        CustomDropdownFormField(),
 
         const SizedBox(height: 20),
 

@@ -14,8 +14,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HerafiColors.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actions: [
           GestureDetector(
             onTap: () => context.push(HerafiRoutes.profile),
@@ -25,9 +25,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(width: 12),
         ],
-        title: Text("الرئيسية", style: HerafiStyles.text26boldWhite),
-        centerTitle: true,
-        backgroundColor: HerafiColors.darkBlueColor,
+        title: Text("الرئيسية"),
       ),
       body: SingleChildScrollView(
         child: Column(

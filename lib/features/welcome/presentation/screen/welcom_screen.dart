@@ -11,7 +11,6 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HerafiColors.background,
       appBar: AppBar(
         backgroundColor: HerafiColors.darkBlueColor,
         title: Text.rich(
@@ -123,7 +122,7 @@ class WelcomeScreen extends StatelessWidget {
                           SizedBox(height: 12),
                           CustomButton(
                             onPressed: () {
-                              context.go(HerafiRoutes.signUp);
+                              context.push(HerafiRoutes.signUp);
                             },
                             text: 'اخـتـر كـحـرفي',
                             color: HerafiColors.goldColor,

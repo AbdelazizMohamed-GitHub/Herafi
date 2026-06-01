@@ -13,7 +13,6 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HerafiColors.background,
       body: CustomScrollView(
         slivers: [
           //AuthAppBarWidget
