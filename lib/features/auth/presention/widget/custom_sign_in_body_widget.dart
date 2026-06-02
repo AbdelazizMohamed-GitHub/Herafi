@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
+import 'package:herafi_app/core/widget/custom_otp_widget.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -21,23 +22,14 @@ class CustomSignInBodyWidget extends StatelessWidget {
         const SizedBox(height: 10),
 
         CustomTextForm(
-          pIcon: Icons.email,
+          pIcon: Icons.phone,
           text: 'ادخل رقم الهاتف',
-          kType: TextInputType.emailAddress,
+          kType: TextInputType.phone,
         ),
 
-        const SizedBox(height: 20),
+        const SizedBox(height: 16),
 
-        MaterialPinField(
-          length: 6,
-          // onCompleted: (pin) => print('PIN: $pin'),
-          // onChanged: (value) => print('Changed: $value'),
-          theme: MaterialPinTheme(
-            shape: MaterialPinShape.outlined,
-            cellSize: Size(56, 64),
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
+        CustomOtpWidget(),
         const SizedBox(height: 20),
 
         CustomButton(
