@@ -3,6 +3,7 @@ import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/widget/custom_drop_down_form_field_widget.dart';
 import 'package:herafi_app/core/widget/custom_otp_widget.dart';
+import 'package:herafi_app/core/widget/custom_snakbar_widget.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
 
@@ -15,6 +16,7 @@ class CustomSignUpBodyWidget extends StatefulWidget {
 
 class _CustomSignUpBodyWidgetState extends State<CustomSignUpBodyWidget> {
   bool otpSent = false;
+  bool verified = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class _CustomSignUpBodyWidgetState extends State<CustomSignUpBodyWidget> {
 
         const SizedBox(height: 16),
 
-        /// PHONE
+        /// PHONE + SEND OTP
         const Text('رقم الهاتف', style: HerafiStyles.text20Black),
         const SizedBox(height: 8),
 
@@ -55,22 +57,41 @@ class _CustomSignUpBodyWidgetState extends State<CustomSignUpBodyWidget> {
               ),
             ),
             TextButton(
-              onPressed: () {},
-              child: const Text('إرسال ', style: HerafiStyles.text16BlackBold),
+              onPressed: () {
+                setState(() {
+                  otpSent = true;
+                });
+
+                // send OTP here
+              },
+              child: const Text('إرسال'),
             ),
           ],
         ),
-        SizedBox(height: 16),
-        CustomOtpWidget(),
+
         const SizedBox(height: 16),
+
+        /// OTP (ONLY AFTER SEND)
+        CustomOtpWidget(),
+
+        const SizedBox(height: 16),
+
+        /// CREATE ACCOUNT (AFTER VERIFY ONLY)
         CustomButton(
-          onPressed: () {},
+          onPressed: verified
+              ? () {
+                  // create account
+                }
+              : () {
+                  CustomSnackBarWidget.showWarning(
+                    context,
+                    message: 'يجب عليك تحقق من الكود أولاً',
+                  );
+                },
           text: 'إنشاء حساب',
           color: HerafiColors.goldColor,
           textStyle: HerafiStyles.text20White,
         ),
-
-        /// SEND OTP BUTTON (clear UX)
       ],
     );
   }
