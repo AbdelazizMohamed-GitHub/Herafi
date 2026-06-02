@@ -5,6 +5,7 @@ import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class CustomSignInBodyWidget extends StatelessWidget {
   const CustomSignInBodyWidget({super.key});
@@ -21,29 +22,22 @@ class CustomSignInBodyWidget extends StatelessWidget {
 
         CustomTextForm(
           pIcon: Icons.email,
-          text: 'ادخل رقم الهاتف او البريد',
+          text: 'ادخل رقم الهاتف',
           kType: TextInputType.emailAddress,
         ),
 
         const SizedBox(height: 20),
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text('كلمة المرور', style: HerafiStyles.text20Black),
-            Text(
-              'نسيت كلمة المرور؟',
-              style: TextStyle(
-                color: Color(0xffF5A623),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+        MaterialPinField(
+          length: 6,
+          // onCompleted: (pin) => print('PIN: $pin'),
+          // onChanged: (value) => print('Changed: $value'),
+          theme: MaterialPinTheme(
+            shape: MaterialPinShape.outlined,
+            cellSize: Size(56, 64),
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
-
-        const SizedBox(height: 10),
-
-        CustomTextForm(text: 'ادخل كلمة المرور', kType: TextInputType.text),
         const SizedBox(height: 20),
 
         CustomButton(
