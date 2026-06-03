@@ -1,19 +1,16 @@
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
+import 'package:herafi_app/app/failure/herafi_failure.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 
 abstract class AuthRepo {
-  Future<void> sendOtp({
-    required String phoneNumber,
-    required VoidCallback onCodeSent,
-    required Function(String error) onError,
-  });
+  Future<Either<Failure, void>> sendOtp({required String phoneNumber});
 
-  Future<UserCredential> verifyOtp({required String otp});
+  Future<Either<Failure, UserCredential>> verifyOtp({required String otp});
 
-  Future<void> createAccount(HerafiModel herafi);
+  Future<Either<Failure, HerafiModel?>> getCurrentUser();
 
-  Future<HerafiModel?> getCurrentUser();
+  Future<Either<Failure, void>> createAccount({required HerafiModel herafi});
 
-  Future<void> logout();
+  Future<Either<Failure, void>> logout();
 }

@@ -6,7 +6,7 @@ class AuthService {
   String? _verificationId;
 
   /// SEND OTP
-  Future<void> sendOtp(String phone) async {
+  Future<void> sendOtp({required String phone}) async {
     await _auth.verifyPhoneNumber(
       phoneNumber: phone,
 
@@ -29,7 +29,7 @@ class AuthService {
   }
 
   /// VERIFY OTP
-  Future<UserCredential> verifyOtp(String otp) async {
+  Future<UserCredential> verifyOtp({required String otp}) async {
     final credential = PhoneAuthProvider.credential(
       verificationId: _verificationId!,
       smsCode: otp,
@@ -39,4 +39,7 @@ class AuthService {
   }
 
   User? get currentUser => _auth.currentUser;
+  Future<void> logout() async {
+    return await _auth.signOut();
+  }
 }
