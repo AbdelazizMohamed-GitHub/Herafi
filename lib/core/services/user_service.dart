@@ -3,10 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 
 class UserService {
-  UserService._();
-
-  static final UserService instance = UserService._();
-
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> createUserProfile({required HerafiModel herafi}) async {
