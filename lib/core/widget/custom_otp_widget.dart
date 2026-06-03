@@ -4,7 +4,9 @@ import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class CustomOtpWidget extends StatefulWidget {
-  const CustomOtpWidget({super.key});
+  final bool otpSent;
+
+  const CustomOtpWidget({super.key, required this.otpSent});
 
   @override
   State<CustomOtpWidget> createState() => _CustomOtpWidgetState();
@@ -18,31 +20,36 @@ class _CustomOtpWidgetState extends State<CustomOtpWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Align(
-          alignment: AlignmentGeometry.topRight,
-          child: const Text('كود التحقق', style: HerafiStyles.text20Black),
+        const Align(
+          alignment: Alignment.topRight,
+          child: Text('كود التحقق', style: HerafiStyles.text20Black),
         ),
 
         const SizedBox(height: 12),
 
-        MaterialPinField(
-          length: 6,
-          onChanged: (value) {
-            setState(() {
-              otp = value;
-            });
-          },
-          onCompleted: (value) {
-            otp = value;
-          },
-          theme: MaterialPinTheme(
-            shape: MaterialPinShape.outlined,
-            cellSize: const Size(52, 60),
-            borderRadius: BorderRadius.circular(12),
-
-            borderWidth: 1,
-
-            elevation: 2,
+        /// 🔥 OTP ALWAYS VISIBLE
+        AbsorbPointer(
+          absorbing: !widget.otpSent, // يمنع الكتابة
+          child: Opacity(
+            opacity: widget.otpSent ? 1 : 0.4, // شكل مقفول بصريًا
+            child: MaterialPinField(
+              length: 6,
+              onChanged: (value) {
+                setState(() {
+                  otp = value;
+                });
+              },
+              onCompleted: (value) {
+                otp = value;
+              },
+              theme: MaterialPinTheme(
+                shape: MaterialPinShape.outlined,
+                cellSize: const Size(52, 60),
+                borderRadius: BorderRadius.circular(12),
+                borderWidth: 1,
+                elevation: 2,
+              ),
+            ),
           ),
         ),
 
@@ -54,7 +61,7 @@ class _CustomOtpWidgetState extends State<CustomOtpWidget> {
           width: double.infinity,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: otp.length == 6
+              backgroundColor: (otp.length == 6 && widget.otpSent)
                   ? HerafiColors.darkBlueColor
                   : Colors.grey.shade300,
               padding: const EdgeInsets.symmetric(vertical: 14),
@@ -62,16 +69,18 @@ class _CustomOtpWidgetState extends State<CustomOtpWidget> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            onPressed: otp.length == 6
+            onPressed: (otp.length == 6 && widget.otpSent)
                 ? () {
                     print("OTP = $otp");
-                    // هنا Firebase verify
+                    // Firebase verify
                   }
                 : null,
             child: Text(
               'تأكيد الكود',
               style: HerafiStyles.text20Black.copyWith(
-                color: otp.length == 6 ? Colors.white : Colors.black45,
+                color: (otp.length == 6 && widget.otpSent)
+                    ? Colors.white
+                    : Colors.black45,
               ),
             ),
           ),

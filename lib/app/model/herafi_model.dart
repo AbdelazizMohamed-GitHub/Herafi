@@ -1,7 +1,7 @@
 class HerafiModel {
   final String id;
   final String name;
-  final List jobTitle;
+  final List<String> jobTitle;
   final String location;
   final String phone;
   final String imageUrl;
@@ -17,26 +17,6 @@ class HerafiModel {
     required this.createdAt,
   });
 
-  HerafiModel copyWith({
-    String? id,
-    String? name,
-    List? jobTitle,
-    String? location,
-    String? phone,
-    String? imageUrl,
-    DateTime? createdAt,
-  }) {
-    return HerafiModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      jobTitle: jobTitle ?? this.jobTitle,
-      location: location ?? this.location,
-      phone: phone ?? this.phone,
-      imageUrl: imageUrl ?? this.imageUrl,
-      createdAt: createdAt ?? this.createdAt,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -45,7 +25,7 @@ class HerafiModel {
       'location': location,
       'phone': phone,
       'imageUrl': imageUrl,
-      'createdAt': createdAt,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 
@@ -53,11 +33,11 @@ class HerafiModel {
     return HerafiModel(
       id: map['id'] ?? '',
       name: map['name'] ?? '',
-      jobTitle: map['jobTitle'] ?? '',
+      jobTitle: List<String>.from(map['jobTitle'] ?? []),
       location: map['location'] ?? '',
       phone: map['phone'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
-      createdAt: map['createdAt'] ?? '',
+      createdAt: DateTime.parse(map['createdAt']),
     );
   }
 }

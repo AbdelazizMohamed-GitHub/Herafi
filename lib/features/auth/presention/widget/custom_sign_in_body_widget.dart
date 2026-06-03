@@ -4,12 +4,20 @@ import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/widget/custom_otp_widget.dart';
+import 'package:herafi_app/core/widget/custom_snakbar_widget.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
-class CustomSignInBodyWidget extends StatelessWidget {
+class CustomSignInBodyWidget extends StatefulWidget {
   const CustomSignInBodyWidget({super.key});
+
+  @override
+  State<CustomSignInBodyWidget> createState() => _CustomSignInBodyWidgetState();
+}
+
+class _CustomSignInBodyWidgetState extends State<CustomSignInBodyWidget> {
+  bool otpSent = false;
+  bool verified = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,24 +29,47 @@ class CustomSignInBodyWidget extends StatelessWidget {
 
         const SizedBox(height: 10),
 
-        CustomTextForm(
-          pIcon: Icons.phone,
-          text: 'ادخل رقم الهاتف',
-          kType: TextInputType.phone,
+        Row(
+          children: [
+            Expanded(
+              child: CustomTextForm(
+                pIcon: Icons.phone,
+                text: '+20xxxxxxxxxx',
+                kType: TextInputType.phone,
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  otpSent = true;
+                });
+
+                // send OTP here
+              },
+              child: const Text('إرسال', style: HerafiStyles.text16BlackBold),
+            ),
+          ],
         ),
 
         const SizedBox(height: 16),
 
-        CustomOtpWidget(),
+        CustomOtpWidget(otpSent: otpSent),
         const SizedBox(height: 20),
 
         CustomButton(
-          onPressed: () {
-            context.push(HerafiRoutes.home);
-          },
+          onPressed: verified
+              ? () {
+                  // create account
+                }
+              : () {
+                  CustomSnackBarWidget.showWarning(
+                    context,
+                    message: 'يجب عليك تحقق من الكود أولاً',
+                  );
+                },
           text: 'تسجيل الدخول',
           color: HerafiColors.goldColor,
-          textStyle: HerafiStyles.text26boldDarkBlue,
+          textStyle: HerafiStyles.text20White,
         ),
       ],
     );

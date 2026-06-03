@@ -64,7 +64,7 @@ class _CustomSignUpBodyWidgetState extends State<CustomSignUpBodyWidget> {
 
                 // send OTP here
               },
-              child: const Text('إرسال'),
+              child: const Text('إرسال', style: HerafiStyles.text16BlackBold),
             ),
           ],
         ),
@@ -72,7 +72,7 @@ class _CustomSignUpBodyWidgetState extends State<CustomSignUpBodyWidget> {
         const SizedBox(height: 16),
 
         /// OTP (ONLY AFTER SEND)
-        CustomOtpWidget(),
+        CustomOtpWidget(otpSent: otpSent),
 
         const SizedBox(height: 16),
 
