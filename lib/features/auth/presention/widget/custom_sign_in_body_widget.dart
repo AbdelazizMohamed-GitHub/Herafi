@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/widget/custom_otp_widget.dart';
@@ -62,9 +60,10 @@ class _CustomSignInBodyWidgetState extends State<CustomSignInBodyWidget> {
                   // create account
                 }
               : () {
-                  CustomSnackBarWidget.showWarning(
+                  CustomSnackBarWidget.show(
                     context,
                     message: 'يجب عليك تحقق من الكود أولاً',
+                    type: SnackBarType.warning,
                   );
                 },
           text: 'تسجيل الدخول',

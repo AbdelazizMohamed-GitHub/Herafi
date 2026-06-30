@@ -34,7 +34,7 @@ class CustomTextForm extends StatelessWidget {
           validator ??
           (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter your $text';
+              return 'الرجاء إدخال $text';
             }
             return null;
           },

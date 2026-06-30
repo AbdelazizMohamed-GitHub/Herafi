@@ -19,7 +19,7 @@ class AuthRepoImpl implements AuthRepo {
 
       return const Right(null);
     } on FirebaseAuthException catch (e) {
-      return Left(Failure(message: e.message));
+      return Left(Failure.fromCode(e.code));
     } catch (e) {
       return Left(Failure(message: e.toString()));
     }
@@ -34,7 +34,7 @@ class AuthRepoImpl implements AuthRepo {
 
       return Right(result);
     } on FirebaseAuthException catch (e) {
-      return Left(Failure(message: e.message));
+      return Left(Failure.fromCode(e.code));
     } catch (e) {
       return Left(Failure(message: e.toString()));
     }
@@ -46,6 +46,8 @@ class AuthRepoImpl implements AuthRepo {
       final user = await userService.getUserData();
 
       return Right(user);
+    } on FirebaseAuthException catch (e) {
+      return Left(Failure.fromCode(e.code));
     } catch (e) {
       return Left(Failure(message: e.toString()));
     }
@@ -59,6 +61,8 @@ class AuthRepoImpl implements AuthRepo {
       await userService.createUserProfile(herafi: herafi);
 
       return const Right(null);
+    } on FirebaseAuthException catch (e) {
+      return Left(Failure.fromCode(e.code));
     } catch (e) {
       return Left(Failure(message: e.toString()));
     }
@@ -70,6 +74,8 @@ class AuthRepoImpl implements AuthRepo {
       await authService.logout();
 
       return const Right(null);
+    } on FirebaseAuthException catch (e) {
+      return Left(Failure.fromCode(e.code));
     } catch (e) {
       return Left(Failure(message: e.toString()));
     }
