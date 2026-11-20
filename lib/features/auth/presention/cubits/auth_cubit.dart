@@ -104,7 +104,7 @@ class AuthCubit extends Cubit<AuthState> {
     final userExists = await authRepo.checkUserExists();
     if (userExists) {
       _canEditPhone = true;
-   
+
       emit(AuthError(failure: Failure(message: 'User already exists.')));
       return;
     }

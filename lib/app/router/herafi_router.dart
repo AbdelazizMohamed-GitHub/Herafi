@@ -1,11 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
+import 'package:herafi_app/core/services/user_service.dart';
 import 'package:herafi_app/features/auth/presention/screens/sign_in_screen.dart';
 import 'package:herafi_app/features/auth/presention/screens/sign_up_screen.dart';
 import 'package:herafi_app/features/home/presention/screen/search_result_screen.dart';
 import 'package:herafi_app/features/home/presention/screen/search_screen.dart';
+import 'package:herafi_app/features/profile/data/repo_impl/pofile_repo_impl.dart';
+import 'package:herafi_app/features/profile/presention/cubit/profile_cubit.dart';
 import 'package:herafi_app/features/profile/presention/screen/edit_profile_screen.dart';
 import 'package:herafi_app/features/profile/presention/screen/profile_screen.dart';
 import 'package:herafi_app/features/home/presention/screen/home_screen.dart';
@@ -48,18 +52,33 @@ final herafiRouter = GoRouter(
         return SearchResultScreen(herafiResultList: herafiList ?? []);
       },
     ),
-    GoRoute(
-      path: HerafiRoutes.profile,
-      builder: (context, state) {
-        final herafi = state.extra as HerafiModel?;
+    ShellRoute(
+      builder: (context, state, child) {
+        if (FirebaseAuth.instance.currentUser == null) {
+          return child;
+        }
 
-        return ProfileScreen(herafi: herafi);
+        return BlocProvider(
+          create: (context) => ProfileCubit(
+            profileRepo: ProfileRepoImpl(userService: UserService()),
+          ),
+          child: child,
+        );
       },
-    ),
-    GoRoute(
-      path: HerafiRoutes.editProfile,
-      builder: (context, state) =>
-          EditProfileScreen(herafi: state.extra as dynamic),
+      routes: [
+        GoRoute(
+          path: HerafiRoutes.profile,
+          builder: (context, state) {
+            final herafi = state.extra as HerafiModel?;
+            return ProfileScreen(herafi: herafi);
+          },
+        ),
+        GoRoute(
+          path: HerafiRoutes.editProfile,
+          builder: (context, state) =>
+              EditProfileScreen(herafi: state.extra as HerafiModel),
+        ),
+      ],
     ),
   ],
 );

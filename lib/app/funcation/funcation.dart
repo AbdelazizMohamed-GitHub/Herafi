@@ -53,24 +53,24 @@ class HerafiFunctions {
     }
     print('Picked image path: ${image.path}');
 
-    // final CroppedFile? croppedImage = await ImageCropper().cropImage(
-    //   sourcePath: image.path,
-    //   aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-    //   uiSettings: [
-    //     AndroidUiSettings(
-    //       toolbarTitle: 'قص الصورة',
-    //       toolbarColor: HerafiColors.darkBlueColor,
-    //       toolbarWidgetColor: Colors.white,
-    //       lockAspectRatio: true,
-    //     ),
-    //     IOSUiSettings(title: 'قص الصورة', aspectRatioLockEnabled: true),
-    //   ],
-    // );
+    final CroppedFile? croppedImage = await ImageCropper().cropImage(
+      sourcePath: image.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'قص الصورة',
+          toolbarColor: HerafiColors.darkBlueColor,
+          toolbarWidgetColor: Colors.white,
+          lockAspectRatio: true,
+        ),
+        IOSUiSettings(title: 'قص الصورة', aspectRatioLockEnabled: true),
+      ],
+    );
 
-    // if (croppedImage == null) {
-    //   return null;
-    // }
+    if (croppedImage == null) {
+      return null;
+    }
 
-    return await image.readAsBytes();
+    return await croppedImage.readAsBytes();
   }
 }

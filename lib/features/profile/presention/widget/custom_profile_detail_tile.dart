@@ -26,7 +26,7 @@ class CustomProfileDetailTileWidget extends StatelessWidget {
         leading: IconButton(onPressed: ontap, icon: Icon(icon, size: 30)),
         contentPadding: const EdgeInsets.all(8),
         title: Text(label, style: HerafiStyles.text16GoldBold),
-        subtitle: Text(value, style: HerafiStyles.text20Black),
+        subtitle: Text(value, style: HerafiStyles.text14BlackBold),
       ),
     );
   }
