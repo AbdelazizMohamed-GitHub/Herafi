@@ -33,60 +33,75 @@ class _CustomPhoneOtpWidgetState extends State<CustomPhoneOtpWidget> {
         const Text('رقم الهاتف', style: HerafiStyles.text20Black),
         const SizedBox(height: 8),
 
-        Row(
-          children: [
-            Expanded(
-              child: CustomTextForm(
-                enabled: !otpSent,
-                textController: phoneController,
-                pIcon: Icons.phone,
-                text: 'رقـم الهاتف',
-                kType: TextInputType.phone,
+        BlocListener<AuthCubit, AuthState>(
+          listenWhen: (previous, current) =>
+              current is OtpSent || current is OtpResendReady,
+          listener: (context, state) {
+            setState(() {
+              otpSent = state is OtpSent;
+            });
+
+            if (state is OtpSent) {
+              widget.phoneChanged?.call(phoneController.text);
+            }
+          },
+          child: Row(
+            children: [
+              Expanded(
+                child: CustomTextForm(
+                  enabled: !otpSent,
+                  textController: phoneController,
+                  pIcon: Icons.phone,
+                  text: 'رقـم الهاتف',
+                  kType: TextInputType.phone,
+                ),
               ),
-            ),
-            BlocBuilder<AuthCubit, AuthState>(
-              builder: (context, state) {
-                final isCooldown = state is OtpResendCooldown;
+              BlocSelector<AuthCubit, AuthState, (bool, int)>(
+                selector: (state) {
+                  final cubit = context.read<AuthCubit>();
+                  return (cubit.isResendActive, cubit.resendSeconds);
+                },
+                builder: (context, cooldown) {
+                  final (isCooldown, seconds) = cooldown;
 
-                final seconds = isCooldown ? state.seconds : 0;
+                  return TextButton(
+                    onPressed: isCooldown
+                        ? null
+                        : () async {
+                            final isFormValid = widget.formKey.currentState!
+                                .validate();
+                            final isPhoneValid = HerafiFunctions.phoneRegex
+                                .hasMatch(phoneController.text);
 
-                return TextButton(
-                  onPressed: isCooldown
-                      ? null
-                      : () async {
-                          if (widget.formKey.currentState!.validate() &&
-                              HerafiFunctions.phoneRegex.hasMatch(
-                                phoneController.text,
-                              )) {
-                            String phone = HerafiFunctions.formatEgyptPhone(
+                            if (!isFormValid || !isPhoneValid) {
+                              CustomSnackBarWidget.show(
+                                type: SnackBarType.warning,
+                                context,
+                                message: 'يرجي كتابة رقم الهاتف صحيح',
+                              );
+                              return;
+                            }
+
+                            final phone = HerafiFunctions.formatEgyptPhone(
                               phoneController.text,
                             );
+
                             await context.read<AuthCubit>().sendOtp(phone);
-                            setState(() {
-                              widget.phoneChanged?.call(phoneController.text);
-                              otpSent = true;
-                            });
-                          } else {
-                            CustomSnackBarWidget.show(
-                              type: SnackBarType.warning,
-                              context,
-                              message: 'يرجي كتابة رقم الهاتف صحيح',
-                            );
-                          }
-                        },
-                  child: Text(
-                    isCooldown
-                        ? 'إعادة الإرسال بعد \n$seconds ثانية'
-                        : 'إرسال الكود',
-                    textAlign: TextAlign.center,
-                    style: HerafiStyles.text16BlackBold.copyWith(
-                      color: isCooldown ? Colors.grey : Colors.black,
+                          },
+                    child: Text(
+                      isCooldown
+                          ? 'إعادة الإرسال بعد \n$seconds ثانية'
+                          : 'إرسال الكود',
+                      textAlign: TextAlign.center,
+                      style: HerafiStyles.text16BlackBold.copyWith(
+                        color: isCooldown ? Colors.grey : Colors.black,
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
-          ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
 
         const SizedBox(height: 16),

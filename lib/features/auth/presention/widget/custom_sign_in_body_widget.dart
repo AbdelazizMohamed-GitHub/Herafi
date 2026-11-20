@@ -51,11 +51,10 @@ class _CustomSignInBodyWidgetState extends State<CustomSignInBodyWidget> {
               // No verification logic here, just a placeholder for OTP completion
             },
           ),
-          const SizedBox(height: 16),
 
           const SizedBox(height: 20),
 
-          BlocConsumer<AuthCubit, AuthState>(
+          BlocListener<AuthCubit, AuthState>(
             listener: (context, state) {
               if (state is AuthError) {
                 CustomSnackBarWidget.show(
@@ -69,7 +68,7 @@ class _CustomSignInBodyWidgetState extends State<CustomSignInBodyWidget> {
                 });
               } else if (state is OtpVerified) {
                 verified = true;
-                context.push(HerafiRoutes.home);
+                context.go(HerafiRoutes.home);
               } else if (state is VerifyOtpLoading) {
                 customSnackbarloadingwidget(
                   context: context,
@@ -79,22 +78,20 @@ class _CustomSignInBodyWidgetState extends State<CustomSignInBodyWidget> {
                 // يمكنك تحديث واجهة المستخدم هنا إذا كنت تريد عرض العد التنازلي
               }
             },
-            builder: (context, state) {
-              return CustomButton(
-                onPressed: () async {
-                  otpSent
-                      ? await context.read<AuthCubit>().verifyOtp(otp)
-                      : CustomSnackBarWidget.show(
-                          type: SnackBarType.warning,
-                          context,
-                          message: 'يرجي ارسال كود التحقق',
-                        );
-                },
-                text: 'تسجيل الدخول',
-                color: HerafiColors.goldColor,
-                textStyle: HerafiStyles.text20White,
-              );
-            },
+            child: CustomButton(
+              onPressed: () async {
+                otpSent
+                    ? await context.read<AuthCubit>().verifyOtp(otp)
+                    : CustomSnackBarWidget.show(
+                        type: SnackBarType.warning,
+                        context,
+                        message: 'يرجي ارسال كود التحقق',
+                      );
+              },
+              text: 'تسجيل الدخول',
+              color: HerafiColors.goldColor,
+              textStyle: HerafiStyles.text20White,
+            ),
           ),
         ],
       ),

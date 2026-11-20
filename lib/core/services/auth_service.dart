@@ -52,6 +52,10 @@ class AuthService {
 
   /// VERIFY OTP
   Future<UserCredential> verifyOtp({required String otp}) async {
+   
+    if (otp.isEmpty) {
+      throw Exception('OTP cannot be empty.');
+    }
     final credential = PhoneAuthProvider.credential(
       verificationId: _verificationId ?? '',
       smsCode: otp,

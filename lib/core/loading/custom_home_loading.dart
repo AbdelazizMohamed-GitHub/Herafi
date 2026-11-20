@@ -20,23 +20,23 @@ class CustomHomeLoadingWidget extends StatelessWidget {
           return const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: ListTile(
-              leading: CircleAvatar(radius: 40, backgroundColor: Colors.grey),
+              leading: Icon(Icons.image, size: 30),
               title: SizedBox(
                 height: 20,
                 width: 250,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(4)),
                   ),
                 ),
               ),
               subtitle: SizedBox(
-                height: 14,
+                height: 16,
                 width: 180,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(4)),
                   ),
                 ),

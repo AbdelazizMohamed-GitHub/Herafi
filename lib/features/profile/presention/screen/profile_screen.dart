@@ -105,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                                             children: [
                                               CustomButton(
                                                 onPressed: () async {
-                                                  final result = await context
+                                                    context
                                                       .push(
                                                         HerafiRoutes
                                                             .editProfile,

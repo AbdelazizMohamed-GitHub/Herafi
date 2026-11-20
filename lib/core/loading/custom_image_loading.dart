@@ -18,7 +18,7 @@ class CustomImageLoading extends StatelessWidget {
     return imageUrl == null || imageUrl!.isEmpty
         ? Image.asset(
             HerafiImage.emptyUserPicture,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
             width: width,
             height: height,
           )

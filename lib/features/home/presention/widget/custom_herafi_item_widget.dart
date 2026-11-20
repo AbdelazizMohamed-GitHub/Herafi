@@ -20,28 +20,29 @@ class CustomHerafiItemWidget extends StatelessWidget {
         context.push(HerafiRoutes.profile, extra: herafi);
       },
       child: AspectRatio(
-        aspectRatio: 7 / 3,
+        aspectRatio: 10 / 3,
 
         child: Card(
           color: Colors.white,
-          margin: EdgeInsets.all(12),
+          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(8),
             child: Row(
               children: [
-                Container(
-                  height: double.infinity,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 0.8),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: CustomImageLoading(
-                      imageUrl: herafi.imageUrl,
-                      width: 120,
-                      height: double.infinity,
+                AspectRatio(
+                  aspectRatio: 4 / 5,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 0.8),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: CustomImageLoading(
+                        imageUrl: herafi.imageUrl,
+                        width: 120,
+                        height: double.infinity,
+                      ),
                     ),
                   ),
                 ),
@@ -52,7 +53,7 @@ class CustomHerafiItemWidget extends StatelessWidget {
                     children: [
                       Text(
                         herafi.name,
-                        style: HerafiStyles.text20Black,
+                        style: HerafiStyles.text16BlackBold,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
@@ -70,7 +71,7 @@ class CustomHerafiItemWidget extends StatelessWidget {
                                   herafi.location?.trim().isNotEmpty == true
                                       ? herafi.location!
                                       : 'لا يوجد عنوان',
-                                  style: HerafiStyles.text16BlackBold,
+                                  style: HerafiStyles.text14BlackBold,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),

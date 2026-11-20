@@ -30,7 +30,7 @@ class CustomHerafiList extends StatelessWidget {
                       scrollDirection: Axis.vertical,
                       itemCount: state.herafiList.length,
                       separatorBuilder: (BuildContext context, int index) {
-                        return Divider(thickness: 0.8, height: 20);
+                        return Divider(thickness: 0.8);
                       },
                       itemBuilder: (BuildContext context, int index) {
                         return CustomHerafiItemWidget(

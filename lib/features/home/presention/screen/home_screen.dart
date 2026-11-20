@@ -54,27 +54,31 @@ class HomeScreen extends StatelessWidget {
           ],
           title: Text("الرئيسية"),
         ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            await context.read<HomeCubit>().getHomeData();
-          },
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.only(right: 16, bottom: 8),
-                  child: Text('التصنيفات', style: HerafiStyles.text20Black),
+        body: Builder(
+          builder: (context) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                await context.read<HomeCubit>().getHomeData();
+              },
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16, bottom: 8),
+                      child: Text('التصنيفات', style: HerafiStyles.text20Black),
+                    ),
+              
+                    SizedBox(height: 80, child: CustomCategoryList()),
+              
+                    Divider(thickness: 1, color: Colors.black),
+                    CustomHerafiList(),
+                  ],
                 ),
-          
-                SizedBox(height: 80, child: CustomCategoryList()),
-          
-                Divider(thickness: 1, color: Colors.black),
-                CustomHerafiList(),
-              ],
-            ),
-          ),
+              ),
+            );
+          }
         ),
       ),
     );

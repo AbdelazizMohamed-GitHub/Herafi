@@ -15,21 +15,39 @@ class AuthCubit extends Cubit<AuthState> {
 
   String? phoneNumber;
   Timer? _timer;
-  int _seconds = 60;
+  int _seconds = 30;
+  bool _isResendActive = false;
+
+  bool get isResendActive => _isResendActive;
+  int get resendSeconds => _seconds;
+
   void startResendTimer() {
-    _seconds = 60;
+    _seconds = 30;
+    _isResendActive = true;
 
     _timer?.cancel();
     emit(OtpResendCooldown(_seconds));
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_seconds == 0) {
+      if (_seconds <= 1) {
+        _seconds = 0;
+        _isResendActive = false;
         timer.cancel();
+        _timer = null;
+        emit(OtpResendReady());
       } else {
         _seconds--;
         emit(OtpResendCooldown(_seconds));
       }
     });
+  }
+
+  @override
+  Future<void> close() {
+    _timer?.cancel();
+    _timer = null;
+    _isResendActive = false;
+    return super.close();
   }
 
   /// =========================
@@ -40,7 +58,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     final result = await authRepo.sendOtp(phoneNumber: phone);
     result.fold((failure) => emit(AuthError(failure: failure)), (_) {
-      emit(OtpSent());
+      emit(OtpSent(isSent: true));
       startResendTimer(); // 🔥 يبدأ العد
     });
   }
@@ -58,8 +76,10 @@ class AuthCubit extends Cubit<AuthState> {
         return emit(AuthError(failure: failure));
       },
       (userCredential) {
+        _timer?.cancel();
+        _timer = null;
+        _isResendActive = false;
         emit(OtpVerified(userCredential: userCredential));
-        _timer?.cancel(); // إلغاء المؤقت عند التحقق بنجاح
       },
     );
   }

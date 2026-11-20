@@ -14,7 +14,11 @@ class VerifyOtpLoading extends AuthState {}
 class CreateAccountLoading extends AuthState {}
 
 /// OTP
-class OtpSent extends AuthState {}
+class OtpSent extends AuthState {
+  final bool isSent;
+
+  OtpSent({required this.isSent});
+}
 
 class OtpVerified extends AuthState {
   final UserCredential userCredential;
@@ -30,6 +34,8 @@ class OtpResendCooldown extends AuthState {
 
   OtpResendCooldown(this.seconds);
 }
+
+class OtpResendReady extends AuthState {}
 
 /// ERROR
 class AuthError extends AuthState {

@@ -16,7 +16,7 @@ class CustomHerafiJobtitleWidget extends StatelessWidget {
 
         return Text(
           index < jobTitle.length - 1 ? '$title &' : title,
-          style: HerafiStyles.text16GoldBold,
+          style: HerafiStyles.text14Goldold,
         );
       }).toList(),
     );
