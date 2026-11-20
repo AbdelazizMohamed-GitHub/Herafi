@@ -4,9 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:herafi_app/core/constant/herfa_list.dart';
 
 class CustomDropdownFormField extends StatefulWidget {
-  const CustomDropdownFormField({super.key, this.onChanged, this.validator});
+  const CustomDropdownFormField({
+    super.key,
+    this.onChanged,
+    this.validator,
+    this.initialValue,
+  });
   final Function(String?)? onChanged;
   final String Function(String?)? validator;
+  final String? initialValue;
 
   @override
   State<CustomDropdownFormField> createState() =>
@@ -18,14 +24,14 @@ class _CustomDropdownFormFieldState extends State<CustomDropdownFormField> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      //  initialValue: widget.isUpdate ? widget.productCategory : selectedCategory,
+      initialValue: widget.initialValue,
       decoration: InputDecoration(
         fillColor: Colors.white,
         filled: true,
         hintText: "اختر حرفتك",
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      items: herfaList.map((harfa) {
+      items: herfaList.skip(1).map((harfa) {
         return DropdownMenuItem<String>(
           value: harfa.herfaName,
           child: Text(harfa.herfaName),

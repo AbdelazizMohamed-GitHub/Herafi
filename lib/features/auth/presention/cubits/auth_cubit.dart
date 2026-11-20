@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:herafi_app/app/failure/herafi_failure.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/features/auth/domin/auth_repo.dart';
 
@@ -19,11 +20,11 @@ class AuthCubit extends Cubit<AuthState> {
     _seconds = 60;
 
     _timer?.cancel();
+    emit(OtpResendCooldown(_seconds));
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_seconds == 0) {
         timer.cancel();
-        emit(OtpSent()); // رجوع للحالة الطبيعية
       } else {
         _seconds--;
         emit(OtpResendCooldown(_seconds));
@@ -38,10 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(OtpLoading());
 
     final result = await authRepo.sendOtp(phoneNumber: phone);
-
-    result.fold((failure) => emit(AuthError(massageFailure: failure.message)), (
-      _,
-    ) {
+    result.fold((failure) => emit(AuthError(failure: failure)), (_) {
       emit(OtpSent());
       startResendTimer(); // 🔥 يبدأ العد
     });
@@ -56,27 +54,34 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await authRepo.verifyOtp(otp: otp);
 
     result.fold(
-      (failure) => emit(AuthError(massageFailure: failure.message)),
-      (userCredential) => emit(OtpVerified(userCredential: userCredential)),
+      (failure) {
+        return emit(AuthError(failure: failure));
+      },
+      (userCredential) {
+        emit(OtpVerified(userCredential: userCredential));
+        _timer?.cancel(); // إلغاء المؤقت عند التحقق بنجاح
+      },
     );
   }
 
-  /// =========================
-  /// CREATE ACCOUNT
-  /// =========================
   Future<void> createAccount({
     required String name,
     required String job,
     required String phoneNumber,
   }) async {
     emit(CreateAccountLoading());
+    final userExists = await authRepo.checkUserExists();
+    if (userExists) {
+      emit(AuthError(failure: Failure(message: 'User already exists.')));
+      return;
+    }
 
     final user = HerafiModel(
       id: FirebaseAuth.instance.currentUser!.uid,
       name: name,
       jobTitle: [job],
       location: '',
-      phone: phoneNumber,
+      phoneNumber: phoneNumber,
       imageUrl: '',
       createdAt: DateTime.now(),
     );
@@ -84,35 +89,8 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await authRepo.createAccount(herafi: user);
 
     result.fold(
-      (failure) => emit(AuthError(massageFailure: failure.message)),
+      (failure) => emit(AuthError(failure: failure)),
       (_) => emit(CreateAccountSuccess()),
     );
-  }
-
-  /// =========================
-  /// GET USER
-  /// =========================
-  Future<void> getUser() async {
-    emit(AuthLoading());
-
-    final result = await authRepo.getCurrentUser();
-
-    result.fold((failure) => emit(AuthError(massageFailure: failure.message)), (
-      user,
-    ) {
-      if (user != null) {
-        emit(UserLoaded(user: user));
-      } else {
-        emit(AuthInitial());
-      }
-    });
-  }
-
-  /// =========================
-  /// LOGOUT
-  /// =========================
-  Future<void> logout() async {
-    await authRepo.logout();
-    emit(AuthInitial());
   }
 }

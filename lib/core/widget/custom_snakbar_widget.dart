@@ -60,3 +60,30 @@ class CustomSnackBarWidget {
     }
   }
 }
+
+void customSnackbarloadingwidget({
+  required BuildContext context,
+  required String message,
+}) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      behavior: SnackBarBehavior.floating,
+      margin: const EdgeInsets.all(16),
+      duration: const Duration(seconds: 3),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      backgroundColor: HerafiColors.darkBlueColor,
+      content: Row(
+        children: [
+          const CircularProgressIndicator(color: Colors.white),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              message,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}

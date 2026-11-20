@@ -1,16 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:herafi_app/app/funcation/funcation.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/constant/assets/herafi_image.dart';
-import 'package:herafi_app/core/widget/custom_herafi_jobTitle_widget.dart';
+import 'package:herafi_app/core/widget/custom_herafi_jobtitle_widget.dart';
+import 'package:herafi_app/core/loading/custom_image_loading.dart';
 import 'package:herafi_app/features/profile/presention/widget/custom_profile_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomProfileHeaderWidget extends StatelessWidget {
-  const CustomProfileHeaderWidget({super.key, required this.profile});
+  const CustomProfileHeaderWidget({super.key, required this.herafi});
 
-  final HerafiModel profile;
+  final HerafiModel herafi;
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +31,20 @@ class CustomProfileHeaderWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-            radius: 80,
+            radius: 100,
             backgroundColor: Colors.white,
             child: ClipOval(
-              child: Image.asset(
-                profile.imageUrl,
-                width: 180,
-                height: 150,
-                fit: BoxFit.contain,
+              child: CustomImageLoading(
+                imageUrl: herafi.imageUrl,
+                width: 195,
+                height: 195,
               ),
             ),
           ),
           const SizedBox(height: 12),
-          Text(profile.name, style: HerafiStyles.text26boldWhite),
+          Text(herafi.name, style: HerafiStyles.text26boldWhite),
           const SizedBox(height: 4),
-          CustomHerafiJobtitleWidget(jobTitle: profile.jobTitle),
+          CustomHerafiJobtitleWidget(jobTitle: herafi.jobTitle),
           const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -51,6 +54,11 @@ class CustomProfileHeaderWidget extends StatelessWidget {
                 buttonTextStyle: HerafiStyles.text20Black,
                 buttonColor: HerafiColors.background,
                 buttonIcon: Icon(Icons.phone),
+                onTap: () {
+                  final Uri phoneUrl = Uri.parse('tel:${herafi.phoneNumber}');
+
+                  launchUrl(phoneUrl);
+                },
               ),
               SizedBox(width: 12),
               CustomProfileButton(
@@ -58,6 +66,10 @@ class CustomProfileHeaderWidget extends StatelessWidget {
                 buttonTextStyle: HerafiStyles.text20White,
                 buttonColor: HerafiColors.goldColor,
                 buttonIcon: SvgPicture.asset(HerafiImage.whatsapp),
+                onTap: () async {
+                  await HerafiFunctions.openWhatsApp(herafi.phoneNumber);
+                  // Handle WhatsApp button tap
+                },
               ),
             ],
           ),

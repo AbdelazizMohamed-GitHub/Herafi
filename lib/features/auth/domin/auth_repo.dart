@@ -8,9 +8,6 @@ abstract class AuthRepo {
 
   Future<Either<Failure, UserCredential>> verifyOtp({required String otp});
 
-  Future<Either<Failure, HerafiModel?>> getCurrentUser();
-
   Future<Either<Failure, void>> createAccount({required HerafiModel herafi});
-
-  Future<Either<Failure, void>> logout();
+  Future<bool> checkUserExists();
 }

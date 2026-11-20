@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
-import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
+import 'package:herafi_app/core/services/auth_service.dart';
+import 'package:herafi_app/core/services/user_service.dart';
+import 'package:herafi_app/features/auth/data/auth_repo_impl.dart';
+import 'package:herafi_app/features/auth/presention/cubits/auth_cubit.dart';
 import 'package:herafi_app/features/auth/presention/widget/auth_appbar_widget.dart';
 import 'package:herafi_app/features/auth/presention/widget/custom_google_facebook_auth_widget.dart';
 import 'package:herafi_app/features/auth/presention/widget/custom_sign_in_body_widget.dart';
@@ -12,55 +16,66 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          //AuthAppBarWidget
-          AuthAppBarWidget(appbarTitle: 'سجل دخولك في '),
+    return BlocProvider(
+      create: (context) => AuthCubit(
+        authRepo: AuthRepoImpl(
+          authService: AuthService(),
+          userService: UserService(),
+        ),
+      ),
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            //AuthAppBarWidget
+            AuthAppBarWidget(appbarTitle: 'سجل دخولك في '),
 
-          // Body
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // CustomSignInWidget
-                  CustomSignInBodyWidget(),
+            // Body
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 20,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // CustomSignInWidget
+                    CustomSignInBodyWidget(),
 
-                  const SizedBox(height: 25),
+                    const SizedBox(height: 25),
 
-                  const Center(
-                    child: Text('أو', style: HerafiStyles.text26boldDarkBlue),
-                  ),
+                    const Center(
+                      child: Text('أو', style: HerafiStyles.text26boldDarkBlue),
+                    ),
 
-                  const SizedBox(height: 25),
+                    const SizedBox(height: 25),
 
-                  //CustomGoolge&FaceBookAuthWidget
-                  CustomGoogleFacebookAuthWidget(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('مش عندك حساب؟ ', style: HerafiStyles.text20Black),
-                      TextButton(
-                        onPressed: () {
-                          context.push(HerafiRoutes.signUp);
-                        },
-                        child: Text(
-                          ' سجل الآن',
-                          style: HerafiStyles.text20Gold.copyWith(
-                            fontWeight: FontWeight.bold,
+                    //CustomGoolge&FaceBookAuthWidget
+                    CustomGoogleFacebookAuthWidget(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('مش عندك حساب؟ ', style: HerafiStyles.text20Black),
+                        TextButton(
+                          onPressed: () {
+                            context.push(HerafiRoutes.signUp);
+                          },
+                          child: Text(
+                            ' سجل الآن',
+                            style: HerafiStyles.text20Gold.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                ],
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

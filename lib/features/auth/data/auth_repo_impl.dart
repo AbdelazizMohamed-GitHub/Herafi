@@ -41,19 +41,6 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, HerafiModel?>> getCurrentUser() async {
-    try {
-      final user = await userService.getUserData();
-
-      return Right(user);
-    } on FirebaseAuthException catch (e) {
-      return Left(Failure.fromCode(e.code));
-    } catch (e) {
-      return Left(Failure(message: e.toString()));
-    }
-  }
-
-  @override
   Future<Either<Failure, void>> createAccount({
     required HerafiModel herafi,
   }) async {
@@ -69,15 +56,9 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, void>> logout() async {
-    try {
-      await authService.logout();
+  Future<bool> checkUserExists() async {
+    final exists = await userService.checkUserExists();
 
-      return const Right(null);
-    } on FirebaseAuthException catch (e) {
-      return Left(Failure.fromCode(e.code));
-    } catch (e) {
-      return Left(Failure(message: e.toString()));
-    }
+    return exists;
   }
 }

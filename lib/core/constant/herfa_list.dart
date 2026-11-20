@@ -4,6 +4,11 @@ import 'package:herafi_app/core/constant/assets/herfa_image.dart';
 
 List<HerfaModel> herfaList = [
   HerfaModel(
+    herfaName: 'الكل',
+    herfaImagePath: HerfaImage.all,
+    herfaColor: Color.fromARGB(255, 213, 216, 221),
+  ),
+  HerfaModel(
     herfaName: 'السباكة',
     herfaImagePath: HerfaImage.sabak,
     herfaColor: Color(0xffEFF6FF),

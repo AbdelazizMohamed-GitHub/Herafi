@@ -6,7 +6,7 @@ final HerafiModel currentUserProfile = HerafiModel(
   name: 'عبدالعزيز محمد عبدالعزيز',
   jobTitle: ['مطور تطبيقات', 'باك اند'],
   location: 'الشموت - بنها',
-  phone: '01012345678',
+  phoneNumber: '01012345678',
   imageUrl: HerafiImage.user,
   createdAt: DateTime.now(),
 );

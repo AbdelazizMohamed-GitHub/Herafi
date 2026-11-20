@@ -39,4 +39,9 @@ class HerafiStyles {
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
+  static const TextStyle text16WhiteBold = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 }

@@ -1,12 +1,34 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:herafi_app/app/failure/herafi_failure.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   String? _verificationId;
 
+  Future<bool> _hasInternetConnection() async {
+    try {
+      final result = await InternetAddress.lookup(
+        'example.com',
+      ).timeout(const Duration(seconds: 5));
+      return result.isNotEmpty && result.first.rawAddress.isNotEmpty;
+    } on SocketException {
+      return false;
+    } on TimeoutException {
+      return false;
+    }
+  }
+
   /// SEND OTP
   Future<void> sendOtp({required String phone}) async {
+    final hasConnection = await _hasInternetConnection();
+    if (!hasConnection) {
+      Failure(message: 'No Internet Connection.');
+    }
+
     await _auth.verifyPhoneNumber(
       phoneNumber: phone,
 
@@ -31,7 +53,7 @@ class AuthService {
   /// VERIFY OTP
   Future<UserCredential> verifyOtp({required String otp}) async {
     final credential = PhoneAuthProvider.credential(
-      verificationId: _verificationId!,
+      verificationId: _verificationId ?? '',
       smsCode: otp,
     );
 

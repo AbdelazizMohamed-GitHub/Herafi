@@ -84,7 +84,9 @@ class WelcomeScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 12),
                           CustomButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.push(HerafiRoutes.home);
+                            },
                             text: 'اخـتـر كـعـمـيل',
                             color: HerafiColors.darkBlueColor,
                             textStyle: HerafiStyles.text26boldWhite,

@@ -1,4 +1,5 @@
 class HerfaImage {
+  static const String all = 'assets/category/all.svg';
   static const String almontal = 'assets/category/almontal.svg';
   static const String borcolen = 'assets/category/borcolen.svg';
   static const String dehan = 'assets/category/dehan.svg';

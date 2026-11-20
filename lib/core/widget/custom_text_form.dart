@@ -13,6 +13,7 @@ class CustomTextForm extends StatelessWidget {
     this.onChanged,
     required this.kType,
     this.validator,
+    this.enabled = true,
   });
   final IconData? pIcon;
   final Widget? sIcon;
@@ -23,9 +24,11 @@ class CustomTextForm extends StatelessWidget {
   final int lines;
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final bool enabled;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: enabled,
       maxLines: lines,
       onChanged: onChanged,
       obscureText: obscureText,

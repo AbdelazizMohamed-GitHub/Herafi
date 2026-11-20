@@ -1,14 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/features/auth/presention/screens/sign_in_screen.dart';
 import 'package:herafi_app/features/auth/presention/screens/sign_up_screen.dart';
+import 'package:herafi_app/features/home/presention/screen/search_result_screen.dart';
+import 'package:herafi_app/features/home/presention/screen/search_screen.dart';
 import 'package:herafi_app/features/profile/presention/screen/edit_profile_screen.dart';
 import 'package:herafi_app/features/profile/presention/screen/profile_screen.dart';
 import 'package:herafi_app/features/home/presention/screen/home_screen.dart';
 import 'package:herafi_app/features/welcome/presentation/screen/welcom_screen.dart';
 
 final herafiRouter = GoRouter(
-  initialLocation: HerafiRoutes.signUp,
+  initialLocation: FirebaseAuth.instance.currentUser != null
+      ? HerafiRoutes.home
+      : HerafiRoutes.welcome,
   routes: [
     GoRoute(
       path: HerafiRoutes.welcome,
@@ -16,6 +22,7 @@ final herafiRouter = GoRouter(
     ),
     GoRoute(
       path: HerafiRoutes.signIn,
+
       builder: (context, state) => const SignInScreen(),
     ),
     GoRoute(
@@ -27,12 +34,32 @@ final herafiRouter = GoRouter(
       builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
+      path: HerafiRoutes.search,
+      builder: (context, state) {
+        final herafiList = state.extra as List<HerafiModel>?;
+        return SearchScreen(herafiList: herafiList ?? []);
+      },
+    ),
+    GoRoute(
+      path: HerafiRoutes.searchResult,
+      builder: (context, state) {
+        final herafiList = state.extra as List<HerafiModel>?;
+
+        return SearchResultScreen(herafiResultList: herafiList ?? []);
+      },
+    ),
+    GoRoute(
       path: HerafiRoutes.profile,
-      builder: (context, state) => const ProfileScreen(),
+      builder: (context, state) {
+        final herafi = state.extra as HerafiModel?;
+
+        return ProfileScreen(herafi: herafi);
+      },
     ),
     GoRoute(
       path: HerafiRoutes.editProfile,
-      builder: (context, state) => const EditProfileScreen(),
+      builder: (context, state) =>
+          EditProfileScreen(herafi: state.extra as dynamic),
     ),
   ],
 );
