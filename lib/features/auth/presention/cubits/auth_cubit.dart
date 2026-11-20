@@ -17,13 +17,16 @@ class AuthCubit extends Cubit<AuthState> {
   Timer? _timer;
   int _seconds = 30;
   bool _isResendActive = false;
+  bool _canEditPhone = true;
 
   bool get isResendActive => _isResendActive;
   int get resendSeconds => _seconds;
+  bool get canEditPhone => _canEditPhone;
 
   void startResendTimer() {
     _seconds = 30;
     _isResendActive = true;
+    _canEditPhone = false;
 
     _timer?.cancel();
     emit(OtpResendCooldown(_seconds));
@@ -34,6 +37,7 @@ class AuthCubit extends Cubit<AuthState> {
         _isResendActive = false;
         timer.cancel();
         _timer = null;
+        _canEditPhone = true;
         emit(OtpResendReady());
       } else {
         _seconds--;
@@ -57,10 +61,17 @@ class AuthCubit extends Cubit<AuthState> {
     emit(OtpLoading());
 
     final result = await authRepo.sendOtp(phoneNumber: phone);
-    result.fold((failure) => emit(AuthError(failure: failure)), (_) {
-      emit(OtpSent(isSent: true));
-      startResendTimer(); // 🔥 يبدأ العد
-    });
+    result.fold(
+      (failure) {
+        _canEditPhone = true;
+        emit(AuthError(failure: failure));
+      },
+      (_) {
+        _canEditPhone = false;
+        emit(OtpSent(isSent: true));
+        startResendTimer();
+      },
+    );
   }
 
   /// =========================
@@ -92,6 +103,8 @@ class AuthCubit extends Cubit<AuthState> {
     emit(CreateAccountLoading());
     final userExists = await authRepo.checkUserExists();
     if (userExists) {
+      _canEditPhone = true;
+   
       emit(AuthError(failure: Failure(message: 'User already exists.')));
       return;
     }
@@ -108,9 +121,9 @@ class AuthCubit extends Cubit<AuthState> {
 
     final result = await authRepo.createAccount(herafi: user);
 
-    result.fold(
-      (failure) => emit(AuthError(failure: failure)),
-      (_) => emit(CreateAccountSuccess()),
-    );
+    result.fold((failure) {
+      _canEditPhone = true;
+      emit(AuthError(failure: failure));
+    }, (_) => emit(CreateAccountSuccess()));
   }
 }

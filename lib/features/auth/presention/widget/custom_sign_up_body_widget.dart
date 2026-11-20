@@ -65,6 +65,7 @@ class _CustomSignUpBodyWidgetState extends State<CustomSignUpBodyWidget> {
 
           /// PHONE + SEND OTP
           CustomPhoneOtpWidget(
+
             formKey: _formKey,
             phoneChanged: (val) {
               phoneNumber = val;
@@ -107,6 +108,7 @@ class _CustomSignUpBodyWidgetState extends State<CustomSignUpBodyWidget> {
                   type: SnackBarType.success,
                 );
               } else if (state is AuthError) {
+            
                 CustomSnackBarWidget.show(
                   type: SnackBarType.error,
                   context,

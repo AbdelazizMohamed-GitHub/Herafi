@@ -10,7 +10,7 @@ class SupabaseService {
     required String fileExtension, // مثلا: 'jpg' أو 'png'
   }) async {
     try {
-      print('Uploading image...');
+    
       final fileName =
           '${DateTime.now().millisecondsSinceEpoch}.$fileExtension';
 

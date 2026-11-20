@@ -37,23 +37,25 @@ class _CustomPhoneOtpWidgetState extends State<CustomPhoneOtpWidget> {
           listenWhen: (previous, current) =>
               current is OtpSent || current is OtpResendReady,
           listener: (context, state) {
-            setState(() {
-              otpSent = state is OtpSent;
-            });
-
             if (state is OtpSent) {
+              setState(() => otpSent = true);
               widget.phoneChanged?.call(phoneController.text);
             }
           },
           child: Row(
             children: [
               Expanded(
-                child: CustomTextForm(
-                  enabled: !otpSent,
-                  textController: phoneController,
-                  pIcon: Icons.phone,
-                  text: 'رقـم الهاتف',
-                  kType: TextInputType.phone,
+                child: BlocSelector<AuthCubit, AuthState, bool>(
+                  selector: (state) => context.read<AuthCubit>().canEditPhone,
+                  builder: (context, canEditPhone) {
+                    return CustomTextForm(
+                      enabled: canEditPhone,
+                      textController: phoneController,
+                      pIcon: Icons.phone,
+                      text: 'رقـم الهاتف',
+                      kType: TextInputType.phone,
+                    );
+                  },
                 ),
               ),
               BlocSelector<AuthCubit, AuthState, (bool, int)>(
