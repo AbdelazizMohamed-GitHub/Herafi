@@ -25,29 +25,50 @@ class UserService {
     return HerafiModel.fromMap(doc.data()!);
   }
 
-  Future<void> updateProfileData({
-    required HerafiModel herafi,
-    required Uint8List? selectedImage,
-  }) async {
-    if (userId == null) {
-      throw Exception('المستخدم غير مسجل دخول');
-    }
-
-    if (selectedImage != null) {
-      ;
-      await SupabaseService()
-          .uploadImage(fileBytes: selectedImage, fileExtension: 'jpg')
-          .then((imageUrl) {
-            if (imageUrl != null) {
-              herafi = herafi.copyWith(imageUrl: imageUrl);
-            }
-          })
-          .catchError((error) {
-            throw Exception('Error uploading image: $error');
-          });
-    }
-    await _firestore.collection('users').doc(userId).update(herafi.toMap());
+ Future<void> updateProfileData({
+  required HerafiModel herafi,
+  required Uint8List? selectedImage,
+}) async {
+  if (userId == null) {
+    throw Exception('المستخدم غير مسجل دخول');
   }
+
+  final userRef = _firestore.collection('users').doc(userId);
+
+  // 1. اقرأ الرابط القديم قبل أي تغيير
+  final snapshot = await userRef.get();
+  final oldImageUrl = snapshot.data()?['imageUrl'] as String?;
+
+  // 2. ارفع الصورة الجديدة لو موجودة
+  String? newImageUrl;
+  if (selectedImage != null) {
+    newImageUrl = await SupabaseService().uploadImage(
+      fileBytes: selectedImage,
+      fileExtension: 'jpg',
+    );
+    if (newImageUrl != null) {
+      herafi = herafi.copyWith(imageUrl: newImageUrl);
+    }
+  }
+
+  // 3. حدّث بيانات المستخدم
+  await userRef.update(herafi.toMap());
+
+  // 4. امسح القديمة بعد نجاح التحديث
+  final shouldDeleteOld = newImageUrl != null &&
+      oldImageUrl != null &&
+      oldImageUrl.isNotEmpty &&
+      oldImageUrl != newImageUrl;
+
+  if (shouldDeleteOld) {
+    try {
+      await SupabaseService().deleteImageByUrl(oldImageUrl);
+    } catch (e) {
+      // فشل الحذف ما يوقفش تحديث البروفايل
+
+    }
+  }
+}
 
   Future<void> logout() async {
     await FirebaseAuth.instance.signOut();

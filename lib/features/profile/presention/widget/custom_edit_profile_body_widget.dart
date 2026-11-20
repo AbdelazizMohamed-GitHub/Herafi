@@ -87,15 +87,23 @@ class _CustomEditProfileBodyWidgetState
         CustomTextForm(
           enabled: editMode,
           text: 'تعديل الموقع',
-          kType: TextInputType.name,
+          kType: TextInputType.streetAddress,
           pIcon: Icons.location_on,
           textController: locationController,
+          sIcon: IconButton(
+            onPressed: editMode
+                ? () {
+                    // فتح الخريطة واختيار الموقع
+                  }
+                : null,
+            icon: const Icon(Icons.map_outlined),
+            tooltip: 'اختيار الموقع من الخريطة',
+          ),
         ),
         SizedBox(height: 16),
         BlocConsumer<ProfileCubit, ProfileState>(
           listener: (context, state) {
             if (state is ProfileError) {
-              print('Error is ${state.failure.message}');
               CustomSnackBarWidget.show(
                 context,
                 message: state.failure.message,

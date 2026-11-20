@@ -25,6 +25,17 @@ class HerafiFunctions {
 
     return '+20$phone';
   }
+ static String? extractStoragePath(String url, {required String bucket}) {
+  final segments = Uri.parse(url).pathSegments;
+  final bucketIndex = segments.indexOf(bucket);
+
+  if (bucketIndex == -1 || bucketIndex + 1 >= segments.length) {
+    return null;
+  }
+
+  // كل اللي بعد اسم الـ bucket هو المسار جوا الـ storage
+  return segments.sublist(bucketIndex + 1).join('/');
+}
 
   static Future<void> openWhatsApp(String phoneNumber) async {
     final formattedNumber = formatEgyptPhone(phoneNumber);
