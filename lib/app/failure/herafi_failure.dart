@@ -63,6 +63,7 @@ class Failure {
 
       case 'unauthenticated':
         return const Failure(message: 'User is not authenticated.');
+        
 
       default:
         return Failure(message: 'Error: $code');
