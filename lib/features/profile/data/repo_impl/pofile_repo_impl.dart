@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:herafi_app/app/failure/herafi_failure.dart';
@@ -22,6 +21,23 @@ class ProfileRepoImpl implements ProfileRepo {
       } else {
         return Left(Failure(message: 'User not found'));
       }
+    } on FirebaseAuthException catch (e) {
+      return Left(Failure.fromCode(e.code));
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, HerafiModel>> getHerafiById({
+    required String herafiId,
+  }) async {
+    try {
+      final herafi = await userService.getHerafiById(herafiId: herafiId);
+      if (herafi != null) {
+        return Right(herafi);
+      }
+      return Left(Failure(message: 'User not found'));
     } on FirebaseAuthException catch (e) {
       return Left(Failure.fromCode(e.code));
     } catch (e) {

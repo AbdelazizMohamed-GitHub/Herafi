@@ -54,10 +54,6 @@ final herafiRouter = GoRouter(
     ),
     ShellRoute(
       builder: (context, state, child) {
-        if (FirebaseAuth.instance.currentUser == null) {
-          return child;
-        }
-
         return BlocProvider(
           create: (context) => ProfileCubit(
             profileRepo: ProfileRepoImpl(userService: UserService()),

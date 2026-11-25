@@ -5,6 +5,8 @@ class HerafiModel {
   final String? location;
   final String phoneNumber;
   final String? imageUrl;
+  final double rating;
+  final int reviewsCount;
   final DateTime createdAt;
 
   const HerafiModel({
@@ -14,6 +16,8 @@ class HerafiModel {
     required this.location,
     required this.phoneNumber,
     required this.imageUrl,
+    this.rating = 0,
+    this.reviewsCount = 0,
     required this.createdAt,
   });
 
@@ -24,6 +28,8 @@ class HerafiModel {
     String? location,
     String? phoneNumber,
     String? imageUrl,
+    double? rating,
+    int? reviewsCount,
     DateTime? createdAt,
   }) {
     return HerafiModel(
@@ -33,11 +39,17 @@ class HerafiModel {
       location: location ?? this.location,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       imageUrl: imageUrl ?? this.imageUrl,
+      rating: rating ?? this.rating,
+      reviewsCount: reviewsCount ?? this.reviewsCount,
       createdAt: createdAt ?? this.createdAt,
     );
   }
 
   Map<String, dynamic> toMap() {
+    return {...toProfileMap(), 'rating': rating, 'reviewsCount': reviewsCount};
+  }
+
+  Map<String, dynamic> toProfileMap() {
     return {
       'id': id,
       'name': name,
@@ -57,6 +69,8 @@ class HerafiModel {
       location: map['location'] ?? 'لا يوجد عنوان',
       phoneNumber: map['phoneNumber'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
+      rating: (map['rating'] as num?)?.toDouble() ?? 0,
+      reviewsCount: (map['reviewsCount'] as num?)?.toInt() ?? 0,
       createdAt: DateTime.parse(map['createdAt']),
     );
   }

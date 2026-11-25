@@ -93,6 +93,13 @@ class UserService {
     return HerafiModel.fromMap(doc.data()!);
   }
 
+  Future<HerafiModel?> getHerafiById({required String herafiId}) async {
+    final doc = await _firestore.collection('users').doc(herafiId).get();
+    final data = doc.data();
+
+    return data == null ? null : HerafiModel.fromMap(data);
+  }
+
   Future<void> updateProfileData({
     required HerafiModel herafi,
     required Uint8List? selectedImage,
@@ -120,7 +127,7 @@ class UserService {
     }
 
     // 3. حدّث بيانات المستخدم
-    await userRef.update(herafi.toMap());
+    await userRef.update(herafi.toProfileMap());
 
     // 4. امسح القديمة بعد نجاح التحديث
     final shouldDeleteOld =

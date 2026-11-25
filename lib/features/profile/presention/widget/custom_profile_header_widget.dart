@@ -45,6 +45,18 @@ class CustomProfileHeaderWidget extends StatelessWidget {
           Text(herafi.name, style: HerafiStyles.text26boldWhite),
           const SizedBox(height: 4),
           CustomHerafiJobtitleWidget(jobTitle: herafi.jobTitle),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.star, color: Colors.amber, size: 20),
+              const SizedBox(width: 4),
+              Text(
+                '${herafi.rating.toStringAsFixed(1)} (${herafi.reviewsCount})',
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ],
+          ),
           const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

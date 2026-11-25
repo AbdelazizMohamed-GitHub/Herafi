@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
@@ -7,10 +8,12 @@ import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/widget/custom_error_widget.dart';
 import 'package:herafi_app/core/widget/custom_loading_widget.dart';
+import 'package:herafi_app/core/widget/custom_snakbar_widget.dart';
 import 'package:herafi_app/core/widget/cutom_button.dart';
 import 'package:herafi_app/features/profile/presention/cubit/profile_cubit.dart';
 import 'package:herafi_app/features/profile/presention/cubit/profile_state.dart';
 import 'package:herafi_app/features/profile/presention/widget/custom_herafi_data_widget.dart';
+import 'package:herafi_app/features/profile/presention/widget/add_review_bottom_sheet.dart';
 import 'package:herafi_app/features/profile/presention/widget/custom_profile_detail_tile.dart';
 import 'package:herafi_app/features/profile/presention/widget/custom_profile_header_widget.dart';
 
@@ -34,6 +37,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           context.read<ProfileCubit>().getHerafiData();
         }
       });
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          context.read<ProfileCubit>().getHerafiById(
+            herafiId: widget.herafi!.id,
+          );
+        }
+      });
     }
   }
 
@@ -53,8 +64,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           title: const Text('الملف الشخصي'),
         ),
+        floatingActionButton: isCurrentUser
+            ? null
+            : FloatingActionButton.extended(
+                onPressed: () {
+                  final currentUser = FirebaseAuth.instance.currentUser;
+                  if (currentUser == null) {
+                    context.push(HerafiRoutes.signIn);
+                    return;
+                  }
+                  if (currentUser.uid == widget.herafi!.id) {
+                    CustomSnackBarWidget.show(
+                      context,
+                      message: 'لا يمكنك تقييم ملفك الشخصي',
+                      type: SnackBarType.warning,
+                    );
+                    return;
+                  }
+
+                  showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (_) =>
+                        AddReviewBottomSheet(herafiId: widget.herafi!.id),
+                  );
+                },
+                icon: const Icon(Icons.rate_review),
+                label: const Text('أضف تقييم'),
+              ),
         body: !isCurrentUser
-            ? CustomHerafiDataWidget(herafi: widget.herafi!)
+            ? BlocBuilder<ProfileCubit, ProfileState>(
+                builder: (context, state) {
+                  if (state is ProfileLoaded) {
+                    return CustomHerafiDataWidget(herafi: state.herafi);
+                  }
+                  if (state is ProfileError) {
+                    return CustomErrorWidget(
+                      errorMessage: state.failure.message,
+                      onRetry: () => context.read<ProfileCubit>().getHerafiById(
+                        herafiId: widget.herafi!.id,
+                      ),
+                    );
+                  }
+                  return const Center(child: CustomLoadingWidget());
+                },
+              )
             : BlocBuilder<ProfileCubit, ProfileState>(
                 builder: (context, state) {
                   if (state is GetProfileDataLoading) {

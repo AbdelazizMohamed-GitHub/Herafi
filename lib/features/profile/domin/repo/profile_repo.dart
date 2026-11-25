@@ -8,6 +8,10 @@ import 'package:herafi_app/features/profile/domin/model/review_model.dart';
 abstract class ProfileRepo {
   Future<Either<Failure, HerafiModel>> getHerafiData();
 
+  Future<Either<Failure, HerafiModel>> getHerafiById({
+    required String herafiId,
+  });
+
   Future<Either<Failure, List<ReviewModel>>> getReviews({
     required String herafiId,
   });
