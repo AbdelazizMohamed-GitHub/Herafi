@@ -31,6 +31,20 @@ class UserService {
     return snapshot.docs.map((doc) => ReviewModel.fromMap(doc.data())).toList();
   }
 
+  Future<bool> hasUserReviewed({required String herafiId}) async {
+    final currentUserId = FirebaseAuth.instance.currentUser?.uid;
+    if (currentUserId == null) return false;
+
+    final review = await _firestore
+        .collection('users')
+        .doc(herafiId)
+        .collection('reviews')
+        .doc(currentUserId)
+        .get();
+
+    return review.exists;
+  }
+
   Future<void> addReview({
     required String herafiId,
     required String userId,

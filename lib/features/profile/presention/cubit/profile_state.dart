@@ -11,8 +11,9 @@ class UpdateProfileDataLoading extends ProfileState {}
 
 class ProfileLoaded extends ProfileState {
   final HerafiModel herafi;
+  final bool hasReviewed;
 
-  ProfileLoaded({required this.herafi});
+  ProfileLoaded({required this.herafi, this.hasReviewed = false});
 }
 
 class ProfileError extends ProfileState {

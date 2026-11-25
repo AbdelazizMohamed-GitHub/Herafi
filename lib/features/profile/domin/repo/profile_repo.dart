@@ -16,6 +16,8 @@ abstract class ProfileRepo {
     required String herafiId,
   });
 
+  Future<Either<Failure, bool>> hasUserReviewed({required String herafiId});
+
   Future<Either<Failure, void>> addReview({
     required String herafiId,
     required String userId,

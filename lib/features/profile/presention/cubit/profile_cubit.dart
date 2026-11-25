@@ -22,10 +22,26 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> getHerafiById({required String herafiId}) async {
     emit(GetProfileDataLoading());
-    final result = await profileRepo.getHerafiById(herafiId: herafiId);
-    result.fold(
-      (failure) => emit(ProfileError(failure: failure)),
-      (herafi) => emit(ProfileLoaded(herafi: herafi)),
+    final result = await _loadHerafiById(herafiId: herafiId);
+    result.fold((failure) => emit(ProfileError(failure: failure)), (_) {});
+  }
+
+  Future<Either<Failure, HerafiModel>> _loadHerafiById({
+    required String herafiId,
+  }) async {
+    final herafiResult = await profileRepo.getHerafiById(herafiId: herafiId);
+
+    return await herafiResult.fold<Future<Either<Failure, HerafiModel>>>(
+      (failure) async => Left(failure),
+      (herafi) async {
+        final reviewResult = await profileRepo.hasUserReviewed(
+          herafiId: herafiId,
+        );
+        return reviewResult.fold((failure) => Left(failure), (hasReviewed) {
+          emit(ProfileLoaded(herafi: herafi, hasReviewed: hasReviewed));
+          return Right(herafi);
+        });
+      },
     );
   }
 
@@ -49,11 +65,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       return Left(failure);
     }
 
-    final herafiResult = await profileRepo.getHerafiById(herafiId: herafiId);
-    return herafiResult.fold((failure) => Left(failure), (herafi) {
-      emit(ProfileLoaded(herafi: herafi));
-      return Right(herafi);
-    });
+    return _loadHerafiById(herafiId: herafiId);
   }
 
   Future<void> updateProfileData({

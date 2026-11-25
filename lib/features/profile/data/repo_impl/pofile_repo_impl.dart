@@ -60,6 +60,20 @@ class ProfileRepoImpl implements ProfileRepo {
   }
 
   @override
+  Future<Either<Failure, bool>> hasUserReviewed({
+    required String herafiId,
+  }) async {
+    try {
+      final hasReviewed = await userService.hasUserReviewed(herafiId: herafiId);
+      return Right(hasReviewed);
+    } on FirebaseException catch (e) {
+      return Left(Failure.fromCode(e.code));
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, void>> addReview({
     required String herafiId,
     required String userId,

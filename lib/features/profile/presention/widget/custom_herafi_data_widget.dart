@@ -4,21 +4,34 @@ import 'package:herafi_app/features/profile/presention/widget/custom_profile_det
 import 'package:herafi_app/features/profile/presention/widget/custom_profile_header_widget.dart';
 
 class CustomHerafiDataWidget extends StatelessWidget {
-  const CustomHerafiDataWidget({super.key, required this.herafi});
+  const CustomHerafiDataWidget({
+    super.key,
+    required this.herafi,
+    this.onAddReview,
+    this.hasReviewed = false,
+  });
+
   final HerafiModel herafi;
+  final VoidCallback? onAddReview;
+  final bool hasReviewed;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CustomProfileHeaderWidget(herafi: herafi),
-        SizedBox(height: 20),
+        CustomProfileHeaderWidget(
+          herafi: herafi,
+          onAddReview: onAddReview,
+          hasReviewed: hasReviewed,
+        ),
+        SizedBox(height: 16),
         CustomProfileDetailTileWidget(
           icon: Icons.phone,
           label: 'رقم الهاتف',
           value: herafi.phoneNumber,
           ontap: () {},
         ),
-        SizedBox(height: 16),
+
         CustomProfileDetailTileWidget(
           icon: Icons.location_on,
           label: 'الموقع',

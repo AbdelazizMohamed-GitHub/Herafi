@@ -12,9 +12,16 @@ import 'package:herafi_app/features/profile/presention/widget/custom_profile_but
 import 'package:url_launcher/url_launcher.dart';
 
 class CustomProfileHeaderWidget extends StatelessWidget {
-  const CustomProfileHeaderWidget({super.key, required this.herafi});
+  const CustomProfileHeaderWidget({
+    super.key,
+    required this.herafi,
+    this.onAddReview,
+    this.hasReviewed = false,
+  });
 
   final HerafiModel herafi;
+  final VoidCallback? onAddReview;
+  final bool hasReviewed;
 
   @override
   Widget build(BuildContext context) {
@@ -45,19 +52,47 @@ class CustomProfileHeaderWidget extends StatelessWidget {
           Text(herafi.name, style: HerafiStyles.text26boldWhite),
           const SizedBox(height: 4),
           CustomHerafiJobtitleWidget(jobTitle: herafi.jobTitle),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
             children: [
-              const Icon(Icons.star, color: Colors.amber, size: 20),
-              const SizedBox(width: 4),
-              Text(
-                '${herafi.rating.toStringAsFixed(1)} (${herafi.reviewsCount})',
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.star, color: Colors.amber, size: 20),
+                  const SizedBox(width: 4),
+                  Text(
+                    '${herafi.rating.toStringAsFixed(1)} (${herafi.reviewsCount})',
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ],
               ),
+              if (onAddReview != null)
+                TextButton.icon(
+                  onPressed: onAddReview,
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                  ),
+                  icon: const Icon(Icons.rate_review_outlined, size: 18),
+                  label: const Text('أضف تقييم'),
+                ),
+              if (hasReviewed)
+                TextButton.icon(
+                  onPressed: null,
+                  icon: Icon(
+                    Icons.check_circle_outline,
+                    size: 18,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    'تم التقييم',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
             ],
           ),
-          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

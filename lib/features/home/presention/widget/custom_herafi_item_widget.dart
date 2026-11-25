@@ -51,14 +51,26 @@ class CustomHerafiItemWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        herafi.name,
-                        style: HerafiStyles.text16BlackBold,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            herafi.name,
+                            style: HerafiStyles.text16BlackBold,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                          Spacer(),
+                          const Icon(Icons.star, color: Colors.amber, size: 16),
+                          const SizedBox(width: 4),
+                          Text(
+                            '${herafi.rating.toStringAsFixed(1)} (${herafi.reviewsCount})',
+                            style: HerafiStyles.text14BlackBold,
+                          ),
+                        ],
                       ),
                       CustomHerafiJobtitleWidget(jobTitle: herafi.jobTitle),
-                      Spacer(),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

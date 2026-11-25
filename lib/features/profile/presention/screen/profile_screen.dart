@@ -28,6 +28,28 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   bool get isCurrentUser => widget.herafi == null;
 
+  void _openReviewSheet(String herafiId) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      context.push(HerafiRoutes.signIn);
+      return;
+    }
+    if (currentUser.uid == herafiId) {
+      CustomSnackBarWidget.show(
+        context,
+        message: 'لا يمكنك تقييم ملفك الشخصي',
+        type: SnackBarType.warning,
+      );
+      return;
+    }
+
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => AddReviewBottomSheet(herafiId: herafiId),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -64,39 +86,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           title: const Text('الملف الشخصي'),
         ),
-        floatingActionButton: isCurrentUser
-            ? null
-            : FloatingActionButton.extended(
-                onPressed: () {
-                  final currentUser = FirebaseAuth.instance.currentUser;
-                  if (currentUser == null) {
-                    context.push(HerafiRoutes.signIn);
-                    return;
-                  }
-                  if (currentUser.uid == widget.herafi!.id) {
-                    CustomSnackBarWidget.show(
-                      context,
-                      message: 'لا يمكنك تقييم ملفك الشخصي',
-                      type: SnackBarType.warning,
-                    );
-                    return;
-                  }
-
-                  showModalBottomSheet<void>(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (_) =>
-                        AddReviewBottomSheet(herafiId: widget.herafi!.id),
-                  );
-                },
-                icon: const Icon(Icons.rate_review),
-                label: const Text('أضف تقييم'),
-              ),
         body: !isCurrentUser
             ? BlocBuilder<ProfileCubit, ProfileState>(
                 builder: (context, state) {
                   if (state is ProfileLoaded) {
-                    return CustomHerafiDataWidget(herafi: state.herafi);
+                    return CustomHerafiDataWidget(
+                      herafi: state.herafi,
+                      hasReviewed: state.hasReviewed,
+                      onAddReview: state.hasReviewed
+                          ? null
+                          : () => _openReviewSheet(state.herafi.id),
+                    );
                   }
                   if (state is ProfileError) {
                     return CustomErrorWidget(
@@ -128,14 +128,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Column(
                             children: [
                               CustomProfileHeaderWidget(herafi: state.herafi),
-                              const SizedBox(height: 28),
+                              const SizedBox(height: 16),
                               CustomProfileDetailTileWidget(
                                 icon: Icons.phone,
                                 label: 'رقم الهاتف',
                                 value: state.herafi.phoneNumber,
                                 ontap: () {},
                               ),
-                              const SizedBox(height: 16),
                               CustomProfileDetailTileWidget(
                                 icon: Icons.location_on,
                                 label: 'الموقع',
