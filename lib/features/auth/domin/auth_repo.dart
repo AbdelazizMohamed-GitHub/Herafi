@@ -4,6 +4,8 @@ import 'package:herafi_app/app/failure/herafi_failure.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 
 abstract class AuthRepo {
+  Future<bool> hasInternetConnection();
+
   Future<Either<Failure, void>> sendOtp({required String phoneNumber});
 
   Future<Either<Failure, UserCredential>> verifyOtp({required String otp});

@@ -13,6 +13,11 @@ class AuthRepoImpl implements AuthRepo {
   AuthRepoImpl({required this.authService, required this.userService});
 
   @override
+  Future<bool> hasInternetConnection() {
+    return authService.hasInternetConnection();
+  }
+
+  @override
   Future<Either<Failure, void>> sendOtp({required String phoneNumber}) async {
     try {
       await authService.sendOtp(phone: phoneNumber);

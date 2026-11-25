@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:herafi_app/app/failure/herafi_failure.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -22,11 +21,16 @@ class AuthService {
     }
   }
 
+  Future<bool> hasInternetConnection() => _hasInternetConnection();
+
   /// SEND OTP
   Future<void> sendOtp({required String phone}) async {
     final hasConnection = await _hasInternetConnection();
     if (!hasConnection) {
-      Failure(message: 'No Internet Connection.');
+      throw FirebaseAuthException(
+        code: 'network-request-failed',
+        message: 'No Internet Connection.',
+      );
     }
 
     await _auth.verifyPhoneNumber(
@@ -52,7 +56,6 @@ class AuthService {
 
   /// VERIFY OTP
   Future<UserCredential> verifyOtp({required String otp}) async {
-   
     if (otp.isEmpty) {
       throw Exception('OTP cannot be empty.');
     }

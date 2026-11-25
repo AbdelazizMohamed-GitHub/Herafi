@@ -78,6 +78,14 @@ class AuthCubit extends Cubit<AuthState> {
   /// VERIFY OTP
   /// =========================
   Future<void> verifyOtp(String otp) async {
+    final hasConnection = await authRepo.hasInternetConnection();
+    if (!hasConnection) {
+      emit(
+        AuthError(failure: const Failure(message: 'No Internet Connection.')),
+      );
+      return;
+    }
+
     emit(VerifyOtpLoading());
 
     final result = await authRepo.verifyOtp(otp: otp);

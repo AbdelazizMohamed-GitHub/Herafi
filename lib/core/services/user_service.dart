@@ -25,50 +25,46 @@ class UserService {
     return HerafiModel.fromMap(doc.data()!);
   }
 
- Future<void> updateProfileData({
-  required HerafiModel herafi,
-  required Uint8List? selectedImage,
-}) async {
-  if (userId == null) {
-    throw Exception('المستخدم غير مسجل دخول');
-  }
-
-  final userRef = _firestore.collection('users').doc(userId);
-
-  // 1. اقرأ الرابط القديم قبل أي تغيير
-  final snapshot = await userRef.get();
-  final oldImageUrl = snapshot.data()?['imageUrl'] as String?;
-
-  // 2. ارفع الصورة الجديدة لو موجودة
-  String? newImageUrl;
-  if (selectedImage != null) {
-    newImageUrl = await SupabaseService().uploadImage(
-      fileBytes: selectedImage,
-      fileExtension: 'jpg',
-    );
-    if (newImageUrl != null) {
-      herafi = herafi.copyWith(imageUrl: newImageUrl);
+  Future<void> updateProfileData({
+    required HerafiModel herafi,
+    required Uint8List? selectedImage,
+  }) async {
+    if (userId == null) {
+      throw Exception('المستخدم غير مسجل دخول');
     }
-  }
 
-  // 3. حدّث بيانات المستخدم
-  await userRef.update(herafi.toMap());
+    final userRef = _firestore.collection('users').doc(userId);
 
-  // 4. امسح القديمة بعد نجاح التحديث
-  final shouldDeleteOld = newImageUrl != null &&
-      oldImageUrl != null &&
-      oldImageUrl.isNotEmpty &&
-      oldImageUrl != newImageUrl;
+    // 1. اقرأ الرابط القديم قبل أي تغيير
+    final snapshot = await userRef.get();
+    final oldImageUrl = snapshot.data()?['imageUrl'] as String?;
 
-  if (shouldDeleteOld) {
-    try {
+    // 2. ارفع الصورة الجديدة لو موجودة
+    String? newImageUrl;
+    if (selectedImage != null) {
+      newImageUrl = await SupabaseService().uploadImage(
+        fileBytes: selectedImage,
+        fileExtension: 'jpg',
+      );
+      if (newImageUrl != null) {
+        herafi = herafi.copyWith(imageUrl: newImageUrl);
+      }
+    }
+
+    // 3. حدّث بيانات المستخدم
+    await userRef.update(herafi.toMap());
+
+    // 4. امسح القديمة بعد نجاح التحديث
+    final shouldDeleteOld =
+        newImageUrl != null &&
+        oldImageUrl != null &&
+        oldImageUrl.isNotEmpty &&
+        oldImageUrl != newImageUrl;
+
+    if (shouldDeleteOld) {
       await SupabaseService().deleteImageByUrl(oldImageUrl);
-    } catch (e) {
-      // فشل الحذف ما يوقفش تحديث البروفايل
-
     }
   }
-}
 
   Future<void> logout() async {
     await FirebaseAuth.instance.signOut();

@@ -11,7 +11,6 @@ class SupabaseService {
     required String fileExtension, // مثلا: 'jpg' أو 'png'
   }) async {
     try {
-    
       final fileName =
           '${DateTime.now().millisecondsSinceEpoch}.$fileExtension';
 
@@ -32,14 +31,19 @@ class SupabaseService {
       throw Exception('Error uploading image: $e');
     }
   }
- Future<void> deleteImageByUrl(String url) async {
-  const bucket = 'users'; // غيّره لاسم الـ bucket عندك
 
-  final path = HerafiFunctions.extractStoragePath(url, bucket: bucket);
-  if (path == null) {
-    throw Exception('رابط الصورة غير صالح: $url');
+  Future<void> deleteImageByUrl(String url) async {
+    const bucket = 'users';
+
+    final path = HerafiFunctions.extractStoragePath(url, bucket: bucket);
+    if (path == null) {
+      throw ArgumentError.value(url, 'url', 'Invalid Supabase image URL');
+    }
+
+    final removed = await supabase.storage.from(bucket).remove([path]);
+    if (removed.isEmpty) {
+      print(path);
+      throw StateError('Supabase did not delete an image at "$path".');
+    }
   }
-
-  await Supabase.instance.client.storage.from(bucket).remove([path]);
-}
 }
