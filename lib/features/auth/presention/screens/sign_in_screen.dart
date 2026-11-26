@@ -6,7 +6,6 @@ import 'package:herafi_app/app/di/service_locator.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/features/auth/presention/cubits/auth_cubit.dart';
 import 'package:herafi_app/features/auth/presention/widget/auth_appbar_widget.dart';
-import 'package:herafi_app/features/auth/presention/widget/custom_google_facebook_auth_widget.dart';
 import 'package:herafi_app/features/auth/presention/widget/custom_sign_in_body_widget.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -37,14 +36,6 @@ class SignInScreen extends StatelessWidget {
 
                     const SizedBox(height: 25),
 
-                    const Center(
-                      child: Text('أو', style: HerafiStyles.text26boldDarkBlue),
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    //CustomGoolge&FaceBookAuthWidget
-                    CustomGoogleFacebookAuthWidget(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

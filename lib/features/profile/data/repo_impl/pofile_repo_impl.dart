@@ -1,4 +1,6 @@
 import 'dart:typed_data';
+import 'dart:async';
+import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +13,19 @@ import 'package:herafi_app/features/profile/domin/repo/profile_repo.dart';
 class ProfileRepoImpl implements ProfileRepo {
   final UserService userService;
   ProfileRepoImpl({required this.userService});
+
+  Future<bool> _hasInternetConnection() async {
+    try {
+      final result = await InternetAddress.lookup(
+        'example.com',
+      ).timeout(const Duration(seconds: 5));
+      return result.isNotEmpty && result.first.rawAddress.isNotEmpty;
+    } on SocketException {
+      return false;
+    } on TimeoutException {
+      return false;
+    }
+  }
 
   @override
   Future<Either<Failure, HerafiModel>> getHerafiData() async {
@@ -81,13 +96,11 @@ class ProfileRepoImpl implements ProfileRepo {
     required int rating,
     required String comment,
   }) async {
-    if (rating < 1 || rating > 5) {
-      return const Left(Failure(message: 'Rating must be between 1 and 5.'));
-    }
+    
 
     if (herafiId.isEmpty || userId.isEmpty) {
       return const Left(
-        Failure(message: 'Craftsman and user IDs are required.'),
+        Failure(message: 'Herafi and user IDs are required.'),
       );
     }
 
@@ -112,6 +125,10 @@ class ProfileRepoImpl implements ProfileRepo {
     required Uint8List? selectedImage,
     required HerafiModel herafi,
   }) async {
+    if (!await _hasInternetConnection()) {
+      return const Left(Failure(message: 'No Internet Connection.'));
+    }
+
     try {
       await userService.updateProfileData(
         herafi: herafi,
@@ -119,9 +136,15 @@ class ProfileRepoImpl implements ProfileRepo {
       );
 
       return const Right(null);
-    } on FirebaseAuthException catch (e) {
+    
+    } on FirebaseException catch (e) {
       return Left(Failure.fromCode(e.code));
+    } on SocketException {
+      return const Left(Failure(message: 'No Internet Connection.'));
+    } on TimeoutException {
+      return const Left(Failure(message: 'No Internet Connection.'));
     } catch (e) {
+    
       return Left(Failure(message: e.toString()));
     }
   }
