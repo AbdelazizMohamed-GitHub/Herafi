@@ -4,6 +4,7 @@ import 'package:herafi_app/app/di/service_locator.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/core/constant/herfa_list.dart';
+import 'package:herafi_app/core/services/recent_herafi_service.dart';
 import 'package:herafi_app/core/widget/custom_text_form.dart';
 import 'package:herafi_app/features/home/presention/cubits/search_cubit.dart/search_cubit.dart';
 import 'package:herafi_app/features/home/presention/widget/custom_category_search_item.dart';
@@ -20,6 +21,46 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   int cureenIndex = 0;
   String query = '';
+  late final RecentHerafiService _recentHerafiService;
+  bool _isHistoryLoading = true;
+  bool _historyLoadFailed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _recentHerafiService = getIt<RecentHerafiService>();
+    _loadRecentHistory();
+  }
+
+  Future<void> _loadRecentHistory() async {
+    try {
+      await _recentHerafiService.load();
+    } on Exception {
+      if (mounted) {
+        setState(() {
+          _historyLoadFailed = true;
+        });
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isHistoryLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _clearRecentHistory() async {
+    try {
+      await _recentHerafiService.clear();
+    } on Exception {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('تعذر مسح سجل البحث')));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +100,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               setState(() {
                                 query = value;
                               });
+                              if (value.trim().isEmpty && cureenIndex == 0) {
+                                context.read<SearchCubit>().clearSearch();
+                                return;
+                              }
                               context.read<SearchCubit>().searchHerafi(
                                 query: value,
                                 allHerafiList: widget.herafiList,
@@ -94,6 +139,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               setState(() {
                                 cureenIndex = index;
                               });
+                              if (query.trim().isEmpty && index == 0) {
+                                context.read<SearchCubit>().clearSearch();
+                                return;
+                              }
                               context.read<SearchCubit>().searchHerafi(
                                 query: query,
                                 allHerafiList: widget.herafiList,
@@ -109,7 +158,26 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     ),
                   ),
-                  CustomSearchResultList(),
+                  AnimatedBuilder(
+                    animation: _recentHerafiService,
+                    builder: (context, _) {
+                      final herafisById = {
+                        for (final herafi in widget.herafiList)
+                          herafi.id: herafi,
+                      };
+                      final recentHerafis = _recentHerafiService.recentHerafiIds
+                          .map((id) => herafisById[id])
+                          .whereType<HerafiModel>()
+                          .toList();
+
+                      return CustomSearchResultList(
+                        recentHerafis: recentHerafis,
+                        isHistoryLoading: _isHistoryLoading,
+                        historyLoadFailed: _historyLoadFailed,
+                        onClearHistory: _clearRecentHistory,
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

@@ -1,11 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:herafi_app/app/di/service_locator.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
+import 'package:herafi_app/core/services/recent_herafi_service.dart';
 import 'package:herafi_app/core/widget/custom_error_widget.dart';
 import 'package:herafi_app/core/widget/custom_loading_widget.dart';
 import 'package:herafi_app/core/widget/custom_snakbar_widget.dart';
@@ -58,6 +62,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Future<void> _recordRecentHerafi() async {
+    try {
+      await getIt<RecentHerafiService>().record(widget.herafi!.id);
+    } on Exception {
+      if (mounted) {
+        CustomSnackBarWidget.show(
+          context,
+          message: 'تعذر حفظ الحرفي في سجل البحث',
+          type: SnackBarType.error,
+        );
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -70,6 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
+          unawaited(_recordRecentHerafi());
           context.read<ProfileCubit>().getHerafiById(
             herafiId: widget.herafi!.id,
           );

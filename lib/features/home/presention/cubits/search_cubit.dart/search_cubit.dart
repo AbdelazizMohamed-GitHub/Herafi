@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/features/home/domin/repo/search_repo.dart';
@@ -8,6 +7,10 @@ import 'package:herafi_app/features/home/presention/cubits/search_cubit.dart/sea
 class SearchCubit extends Cubit<SearchState> {
   SearchCubit({required this.searchRepo}) : super(SearchInitial());
   final SearchRepo searchRepo;
+
+  void clearSearch() {
+    emit(SearchInitial());
+  }
 
   void searchHerafi({
     required String query,
