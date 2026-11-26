@@ -6,13 +6,8 @@ class CustomLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        SizedBox(height: 100),
-        Center(
-          child: CircularProgressIndicator(color: HerafiColors.darkBlueColor),
-        ),
-      ],
+    return const Center(
+      child: CircularProgressIndicator(color: HerafiColors.darkBlueColor),
     );
   }
 }

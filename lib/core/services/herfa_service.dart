@@ -9,6 +9,7 @@ class HerfaService {
       final snapshot = await _firestore.collection('users').get();
       return snapshot.docs
           .map((doc) => HerafiModel.fromMap(doc.data()))
+          .where((herafi) => herafi.role == HerafiModel.craftsmanRole)
           .toList();
     } else {
       final snapshot = await _firestore
@@ -17,6 +18,7 @@ class HerfaService {
           .get();
       return snapshot.docs
           .map((doc) => HerafiModel.fromMap(doc.data()))
+          .where((herafi) => herafi.role == HerafiModel.craftsmanRole)
           .toList();
     }
   }

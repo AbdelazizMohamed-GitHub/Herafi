@@ -1,6 +1,10 @@
 class HerafiModel {
+  static const userRole = 'user';
+  static const craftsmanRole = 'craftsman';
+
   final String id;
   final String name;
+  final String role;
   final List<String> jobTitle;
   final String? location;
   final String phoneNumber;
@@ -12,6 +16,7 @@ class HerafiModel {
   const HerafiModel({
     required this.id,
     required this.name,
+    this.role = craftsmanRole,
     required this.jobTitle,
     required this.location,
     required this.phoneNumber,
@@ -24,6 +29,7 @@ class HerafiModel {
   HerafiModel copyWith({
     String? id,
     String? name,
+    String? role,
     List<String>? jobTitle,
     String? location,
     String? phoneNumber,
@@ -35,6 +41,7 @@ class HerafiModel {
     return HerafiModel(
       id: id ?? this.id,
       name: name ?? this.name,
+      role: role ?? this.role,
       jobTitle: jobTitle ?? this.jobTitle,
       location: location ?? this.location,
       phoneNumber: phoneNumber ?? this.phoneNumber,
@@ -53,6 +60,7 @@ class HerafiModel {
     return {
       'id': id,
       'name': name,
+      'role': role,
       'jobTitle': jobTitle,
       'location': location,
       'phoneNumber': phoneNumber,
@@ -65,6 +73,7 @@ class HerafiModel {
     return HerafiModel(
       id: map['id'] ?? '',
       name: map['name'] ?? '',
+      role: map['role'] as String? ?? craftsmanRole,
       jobTitle: List<String>.from(map['jobTitle'] ?? []),
       location: map['location'] ?? 'لا يوجد عنوان',
       phoneNumber: map['phoneNumber'] ?? '',

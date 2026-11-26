@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
+import 'package:herafi_app/app/theme/herafi_style.dart';
 
 enum SnackBarType { success, error, warning }
 
 class CustomSnackBarWidget {
+  static Future<bool?> showToast({required String message}) {
+    return Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: HerafiColors.darkBlueColor,
+      textColor: Colors.white,
+    );
+  }
+
   static void show(
     BuildContext context, {
     required String message,
+    void Function()? onTap,
+    textButton = '',
     SnackBarType type = SnackBarType.warning,
   }) {
     final messenger = ScaffoldMessenger.of(context);
@@ -17,7 +31,7 @@ class CustomSnackBarWidget {
         SnackBar(
           behavior: SnackBarBehavior.floating,
           margin: const EdgeInsets.all(16),
-          duration: const Duration(seconds: 3),
+          duration: const Duration(seconds: 2),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -31,6 +45,10 @@ class CustomSnackBarWidget {
                   message,
                   style: const TextStyle(color: Colors.white, fontSize: 16),
                 ),
+              ),
+              TextButton(
+                onPressed: onTap,
+                child: Text(textButton, style: HerafiStyles.text14Goldold),
               ),
             ],
           ),

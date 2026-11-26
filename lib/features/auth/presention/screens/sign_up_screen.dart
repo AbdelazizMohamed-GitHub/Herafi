@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
+import 'package:herafi_app/app/di/service_locator.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
-import 'package:herafi_app/core/services/auth_service.dart';
-import 'package:herafi_app/core/services/user_service.dart';
-import 'package:herafi_app/features/auth/data/auth_repo_impl.dart';
 import 'package:herafi_app/features/auth/presention/cubits/auth_cubit.dart';
 import 'package:herafi_app/features/auth/presention/widget/auth_appbar_widget.dart';
 import 'package:herafi_app/features/auth/presention/widget/custom_google_facebook_auth_widget.dart';
@@ -17,12 +15,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(
-        authRepo: AuthRepoImpl(
-          authService: AuthService(),
-          userService: UserService(),
-        ),
-      ),
+      create: (context) => getIt<AuthCubit>(),
       child: Scaffold(
         body: CustomScrollView(
           slivers: [

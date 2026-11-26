@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/widget/custom_snakbar_widget.dart';
@@ -38,11 +40,7 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
 
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      CustomSnackBarWidget.show(
-        context,
-        message: 'سجّل الدخول لإضافة تقييم',
-        type: SnackBarType.warning,
-      );
+      context.go(HerafiRoutes.signIn);
       return;
     }
 

@@ -105,6 +105,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> createAccount({
     required String name,
+    required String role,
     required String job,
     required String phoneNumber,
   }) async {
@@ -120,7 +121,8 @@ class AuthCubit extends Cubit<AuthState> {
     final user = HerafiModel(
       id: FirebaseAuth.instance.currentUser!.uid,
       name: name,
-      jobTitle: [job],
+      role: role,
+      jobTitle: role == HerafiModel.craftsmanRole ? [job] : [],
       location: '',
       phoneNumber: phoneNumber,
       imageUrl: '',

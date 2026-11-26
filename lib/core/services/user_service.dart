@@ -64,15 +64,7 @@ class UserService {
 
     await _firestore.runTransaction<void>((transaction) async {
       final craftsmanSnapshot = await transaction.get(craftsmanRef);
-      final reviewSnapshot = await transaction.get(reviewRef);
-
-      if (reviewSnapshot.exists) {
-        throw FirebaseException(
-          plugin: 'cloud_firestore',
-          code: 'already-exists',
-          message: 'You have already reviewed this craftsman.',
-        );
-      }
+     
       if (!craftsmanSnapshot.exists) {
         throw FirebaseException(
           plugin: 'cloud_firestore',

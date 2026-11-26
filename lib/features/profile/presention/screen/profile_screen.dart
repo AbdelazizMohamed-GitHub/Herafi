@@ -31,7 +31,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _openReviewSheet(String herafiId) {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      context.push(HerafiRoutes.signIn);
+      CustomSnackBarWidget.show(
+        context,
+        message: 'سجّل الدخول لإضافة تقييم',
+        type: SnackBarType.warning,
+        onTap: () {
+          context.push(HerafiRoutes.signIn);
+        },
+        textButton: 'تسجيل الدخول',
+      );
       return;
     }
     if (currentUser.uid == herafiId) {

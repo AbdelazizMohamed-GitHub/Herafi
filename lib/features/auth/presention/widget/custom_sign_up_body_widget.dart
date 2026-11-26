@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
@@ -26,6 +27,7 @@ class _CustomSignUpBodyWidgetState extends State<CustomSignUpBodyWidget> {
 
   final nameController = TextEditingController();
 
+  String selectedRole = HerafiModel.craftsmanRole;
   String? selectedJob;
   String otp = '';
   final _formKey = GlobalKey<FormState>();
@@ -51,21 +53,42 @@ class _CustomSignUpBodyWidgetState extends State<CustomSignUpBodyWidget> {
 
           const SizedBox(height: 16),
 
-          /// JOB
-          const Text('نوع الحرفة', style: HerafiStyles.text20Black),
-          const SizedBox(height: 8),
-
-          CustomDropdownFormField(
-            onChanged: (value) {
-              selectedJob = value;
+          CheckboxListTile(
+            value: selectedRole == HerafiModel.craftsmanRole,
+            title: const Text('أنا حرفي'),
+            subtitle: const Text('اختَر هذا الخيار لإضافة مهنتك'),
+            controlAffinity: ListTileControlAffinity.leading,
+            contentPadding: EdgeInsets.zero,
+            activeColor: HerafiColors.goldColor,
+            onChanged: (isCraftsman) {
+              if (isCraftsman == null) return;
+              setState(() {
+                selectedRole = isCraftsman
+                    ? HerafiModel.craftsmanRole
+                    : HerafiModel.userRole;
+                if (!isCraftsman) {
+                  selectedJob = null;
+                }
+              });
             },
           ),
 
           const SizedBox(height: 16),
 
+          /// JOB
+          if (selectedRole == HerafiModel.craftsmanRole) ...[
+            const Text('نوع الحرفة', style: HerafiStyles.text20Black),
+            const SizedBox(height: 8),
+            CustomDropdownFormField(
+              onChanged: (value) {
+                selectedJob = value;
+              },
+            ),
+            const SizedBox(height: 16),
+          ],
+
           /// PHONE + SEND OTP
           CustomPhoneOtpWidget(
-
             formKey: _formKey,
             phoneChanged: (val) {
               phoneNumber = val;
@@ -108,7 +131,6 @@ class _CustomSignUpBodyWidgetState extends State<CustomSignUpBodyWidget> {
                   type: SnackBarType.success,
                 );
               } else if (state is AuthError) {
-            
                 CustomSnackBarWidget.show(
                   type: SnackBarType.error,
                   context,
@@ -125,6 +147,7 @@ class _CustomSignUpBodyWidgetState extends State<CustomSignUpBodyWidget> {
                         if (_formKey.currentState!.validate()) {
                           await context.read<AuthCubit>().createAccount(
                             name: nameController.text,
+                            role: selectedRole,
                             job: selectedJob ?? '',
                             phoneNumber: phoneNumber,
                           );

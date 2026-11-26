@@ -51,7 +51,9 @@ class CustomProfileHeaderWidget extends StatelessWidget {
           const SizedBox(height: 12),
           Text(herafi.name, style: HerafiStyles.text26boldWhite),
           const SizedBox(height: 4),
-          CustomHerafiJobtitleWidget(jobTitle: herafi.jobTitle),
+         
+          if (herafi.role == HerafiModel.craftsmanRole)
+            CustomHerafiJobtitleWidget(jobTitle: herafi.jobTitle),
           Wrap(
             alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,

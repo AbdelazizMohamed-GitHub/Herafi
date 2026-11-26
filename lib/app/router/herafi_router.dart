@@ -1,14 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:herafi_app/app/di/service_locator.dart';
 import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
-import 'package:herafi_app/core/services/user_service.dart';
 import 'package:herafi_app/features/auth/presention/screens/sign_in_screen.dart';
 import 'package:herafi_app/features/auth/presention/screens/sign_up_screen.dart';
 import 'package:herafi_app/features/home/presention/screen/search_result_screen.dart';
 import 'package:herafi_app/features/home/presention/screen/search_screen.dart';
-import 'package:herafi_app/features/profile/data/repo_impl/pofile_repo_impl.dart';
 import 'package:herafi_app/features/profile/presention/cubit/profile_cubit.dart';
 import 'package:herafi_app/features/profile/presention/screen/edit_profile_screen.dart';
 import 'package:herafi_app/features/profile/presention/screen/profile_screen.dart';
@@ -55,9 +54,7 @@ final herafiRouter = GoRouter(
     ShellRoute(
       builder: (context, state, child) {
         return BlocProvider(
-          create: (context) => ProfileCubit(
-            profileRepo: ProfileRepoImpl(userService: UserService()),
-          ),
+          create: (context) => getIt<ProfileCubit>(),
           child: child,
         );
       },

@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
+import 'package:herafi_app/app/di/service_locator.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
 import 'package:herafi_app/core/constant/assets/herafi_image.dart';
-import 'package:herafi_app/core/services/herfa_service.dart';
-import 'package:herafi_app/features/home/data/repo_impl/home_repo_impl.dart';
 import 'package:herafi_app/features/home/presention/cubits/home_cubit/home_cubit.dart';
 import 'package:herafi_app/features/home/presention/widget/custom_category_list.dart';
 import 'package:herafi_app/features/home/presention/widget/custom_herafi_list.dart';
@@ -17,9 +16,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          HomeCubit(homeRepo: HomeRepoImpl(herfaService: HerfaService()))
-            ..getHomeData(),
+      create: (context) => getIt<HomeCubit>()..getHomeData(),
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,

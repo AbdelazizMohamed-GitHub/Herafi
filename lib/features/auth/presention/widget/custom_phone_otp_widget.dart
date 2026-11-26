@@ -40,6 +40,9 @@ class _CustomPhoneOtpWidgetState extends State<CustomPhoneOtpWidget> {
             if (state is OtpSent) {
               setState(() => otpSent = true);
               widget.phoneChanged?.call(phoneController.text);
+              CustomSnackBarWidget.showToast(
+                message: 'تم إرسال كود التحقق بنجاح',
+              );
             }
           },
           child: Row(
