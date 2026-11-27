@@ -59,4 +59,19 @@ class HerafiStyles {
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+  static const TextStyle text12Goldold = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    color: HerafiColors.goldColor,
+  );
+  static const TextStyle text12BlackBold = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
+  static const TextStyle text12WhiteBold = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 }

@@ -4,7 +4,6 @@ import 'package:herafi_app/app/model/herafi_model.dart';
 import 'package:herafi_app/app/router/hearfi_routes.dart';
 import 'package:herafi_app/app/theme/herafi_colors.dart';
 import 'package:herafi_app/app/theme/herafi_style.dart';
-import 'package:herafi_app/core/constant/assets/herafi_image.dart';
 import 'package:herafi_app/core/loading/custom_image_loading.dart';
 import 'package:herafi_app/core/widget/custom_herafi_jobtitle_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -82,8 +81,11 @@ class CustomHerafiItemWidget extends StatelessWidget {
                                 child: Text(
                                   herafi.location?.trim().isNotEmpty == true
                                       ? herafi.location!
+                                      : herafi.latitude != null &&
+                                            herafi.longitude != null
+                                      ? 'موقع على الخريطة'
                                       : 'لا يوجد عنوان',
-                                  style: HerafiStyles.text14BlackBold,
+                                  style: HerafiStyles.text12BlackBold,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),

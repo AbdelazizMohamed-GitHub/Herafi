@@ -95,6 +95,7 @@ class CustomProfileHeaderWidget extends StatelessWidget {
                 ),
             ],
           ),
+          SizedBox(height: 8,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

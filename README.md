@@ -6,6 +6,7 @@ Herafi is a Flutter app that connects people with local craftsmen (حرفيين)
 
 - Sign up and sign in with Firebase Authentication
 - Browse job categories and search for craftsmen
+- Choose and view craftsman locations on OpenStreetMap
 - Craftsman profiles with job titles, average rating, and reviews
 - Rate and review craftsmen (one review per user)
 - Edit your profile and upload profile photos
@@ -17,6 +18,7 @@ Herafi is a Flutter app that connects people with local craftsmen (حرفيين)
 - **Cloud Firestore** for profiles, ratings, and reviews
 - **Supabase Storage** for profile images
 - **flutter_bloc** for state management
+- **flutter_map / OpenStreetMap** for map-based location selection
 - **go_router** for navigation
 - **get_it** for dependency injection
 

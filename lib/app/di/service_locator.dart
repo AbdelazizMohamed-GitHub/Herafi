@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:herafi_app/core/services/auth_service.dart';
 import 'package:herafi_app/core/services/herfa_service.dart';
+import 'package:herafi_app/core/services/location_service.dart';
 import 'package:herafi_app/core/services/recent_herafi_service.dart';
 import 'package:herafi_app/core/services/user_service.dart';
 import 'package:herafi_app/features/auth/data/auth_repo_impl.dart';
@@ -22,6 +23,7 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<AuthService>(() => AuthService());
   getIt.registerLazySingleton<UserService>(() => UserService());
   getIt.registerLazySingleton<HerfaService>(() => HerfaService());
+  getIt.registerLazySingleton<LocationService>(() => LocationService());
   getIt.registerLazySingleton<RecentHerafiService>(() => RecentHerafiService());
 
   getIt.registerLazySingleton<AuthRepo>(

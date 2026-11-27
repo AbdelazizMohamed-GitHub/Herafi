@@ -7,6 +7,8 @@ class HerafiModel {
   final String role;
   final List<String> jobTitle;
   final String? location;
+  final double? latitude;
+  final double? longitude;
   final String phoneNumber;
   final String? imageUrl;
   final double rating;
@@ -19,6 +21,8 @@ class HerafiModel {
     this.role = craftsmanRole,
     required this.jobTitle,
     required this.location,
+    this.latitude,
+    this.longitude,
     required this.phoneNumber,
     required this.imageUrl,
     this.rating = 0,
@@ -32,6 +36,8 @@ class HerafiModel {
     String? role,
     List<String>? jobTitle,
     String? location,
+    double? latitude,
+    double? longitude,
     String? phoneNumber,
     String? imageUrl,
     double? rating,
@@ -44,6 +50,8 @@ class HerafiModel {
       role: role ?? this.role,
       jobTitle: jobTitle ?? this.jobTitle,
       location: location ?? this.location,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       imageUrl: imageUrl ?? this.imageUrl,
       rating: rating ?? this.rating,
@@ -63,6 +71,8 @@ class HerafiModel {
       'role': role,
       'jobTitle': jobTitle,
       'location': location,
+      'latitude': latitude,
+      'longitude': longitude,
       'phoneNumber': phoneNumber,
       'imageUrl': imageUrl,
       'createdAt': createdAt.toIso8601String(),
@@ -76,6 +86,8 @@ class HerafiModel {
       role: map['role'] as String? ?? craftsmanRole,
       jobTitle: List<String>.from(map['jobTitle'] ?? []),
       location: map['location'] ?? 'لا يوجد عنوان',
+      latitude: (map['latitude'] as num?)?.toDouble(),
+      longitude: (map['longitude'] as num?)?.toDouble(),
       phoneNumber: map['phoneNumber'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
       rating: (map['rating'] as num?)?.toDouble() ?? 0,

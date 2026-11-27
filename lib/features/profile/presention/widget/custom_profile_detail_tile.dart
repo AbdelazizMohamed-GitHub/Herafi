@@ -25,8 +25,12 @@ class CustomProfileDetailTileWidget extends StatelessWidget {
       child: ListTile(
         leading: IconButton(onPressed: ontap, icon: Icon(icon, size: 30)),
         contentPadding: const EdgeInsets.all(8),
-        title: Text(label, style: HerafiStyles.text16GoldBold),
-        subtitle: Text(value, style: HerafiStyles.text14BlackBold),
+        title: Text(label, style: HerafiStyles.text14Goldold),
+        subtitle: Text(
+          overflow: TextOverflow.ellipsis,
+        value,
+          maxLines: 2,style: HerafiStyles.text12BlackBold,
+        ),
       ),
     );
   }
