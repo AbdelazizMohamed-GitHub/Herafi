@@ -1,5 +1,7 @@
 import 'package:herafi_app/app/model/herafi_model.dart';
 
+enum SearchSortOption { newest, rating, distance }
+
 class SearchState {}
 
 class SearchInitial extends SearchState {}

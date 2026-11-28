@@ -62,20 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Future<void> _recordRecentHerafi() async {
-    try {
-      await getIt<RecentHerafiService>().record(widget.herafi!.id);
-    } on Exception {
-      if (mounted) {
-        CustomSnackBarWidget.show(
-          context,
-          message: 'تعذر حفظ الحرفي في سجل البحث',
-          type: SnackBarType.error,
-        );
-      }
-    }
-  }
-
+ 
   @override
   void initState() {
     super.initState();
@@ -88,7 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
-          unawaited(_recordRecentHerafi());
+         
           context.read<ProfileCubit>().getHerafiById(
             herafiId: widget.herafi!.id,
           );
